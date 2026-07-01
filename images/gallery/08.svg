@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1150" viewBox="0 0 900 1150" role="img" aria-label="N° 08 - placeholder">
+  <defs>
+    <linearGradient id="g8" x1="0" y1="0" x2="1" y2="1" gradientTransform="rotate(81 .5 .5)">
+      <stop offset="0" stop-color="#12191c"/>
+      <stop offset="1" stop-color="#060a0b"/>
+    </linearGradient>
+    <radialGradient id="glow8" cx="24%" cy="27%" r="75%">
+      <stop offset="0" stop-color="#c9a271" stop-opacity="0.16"/>
+      <stop offset="55%" stop-color="#c9a271" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="vig8" cx="50%" cy="45%" r="75%">
+      <stop offset="55%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.6"/>
+    </radialGradient>
+    <filter id="grain8">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="88" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.06"/></feComponentTransfer>
+    </filter>
+  </defs>
+  <rect width="900" height="1150" fill="url(#g8)"/>
+  <rect width="900" height="1150" fill="url(#glow8)"/>
+  <text x="50%" y="50%" text-anchor="middle" dominant-baseline="central"
+        font-family="'Playfair Display', Georgia, serif" font-weight="700"
+        font-size="378" fill="#ffffff" fill-opacity="0.05">SL</text>
+  <rect width="900" height="1150" filter="url(#grain8)" opacity="0.5"/>
+  <rect width="900" height="1150" fill="url(#vig8)"/>
+  <rect x="18" y="18" width="864" height="1114" fill="none"
+        stroke="#c9a271" stroke-opacity="0.22" stroke-width="1"/>
+  <!-- viewfinder brackets -->
+  <g stroke="#c9a271" stroke-opacity="0.35" stroke-width="2" fill="none">
+    <path d="M40 64 V40 H64"/>
+    <path d="M860 64 V40 H836"/>
+    <path d="M40 1086 V1110 H64"/>
+    <path d="M860 1086 V1110 H836"/>
+  </g>
+  <text x="42" y="1096" font-family="'Inter', Arial, sans-serif" font-size="18"
+        letter-spacing="4" fill="#c9a271" fill-opacity="0.85">N° 08</text>
+  <text x="42" y="1120" font-family="'Inter', Arial, sans-serif" font-size="12"
+        letter-spacing="3" fill="#ffffff" fill-opacity="0.4">SOSTITUISCI CON LA TUA FOTO</text>
+</svg>
