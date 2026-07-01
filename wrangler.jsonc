@@ -1,0 +1,10 @@
+{
+  // Configurazione per il deploy su Cloudflare (Workers static assets).
+  // Il sito e' statico: nessuno script Worker, solo file serviti come asset.
+  "name": "portfolio-fotografo",
+  "compatibility_date": "2025-01-01",
+  "assets": {
+    // Cartella con SOLO i file pubblici del sito.
+    "directory": "./public"
+  }
+}

@@ -1,6 +1,7 @@
 # Dipendenze / build
 node_modules/
 dist/
+.wrangler/
 
 # Sistema operativo
 .DS_Store

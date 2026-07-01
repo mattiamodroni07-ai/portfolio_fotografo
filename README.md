@@ -4,52 +4,66 @@ Sito portfolio per **Salvatore Lacalaprice**, fotografo di matrimoni ed eventi.
 Tema **dark cinematografico** con animazioni scroll-driven (parallax, gallery
 orizzontale, reveal, cursore personalizzato).
 
-Sito **statico** (HTML + CSS + JavaScript), zero build: si apre e si pubblica
-così com'è. Pensato per **Cloudflare Pages**.
+Sito **statico** (HTML + CSS + JavaScript), zero build. I file pubblici sono
+nella cartella **`public/`**; il deploy su Cloudflare è già configurato in
+`wrangler.jsonc`.
 
 ---
 
-## 🚀 Come pubblicarlo su Cloudflare Pages
+## 🚀 Come pubblicarlo su Cloudflare
 
-1. Vai su **Cloudflare Dashboard → Workers & Pages → Create → Pages**.
-2. **Connect to Git** e seleziona questo repository.
-3. Impostazioni di build:
-   - **Framework preset:** `None`
-   - **Build command:** *(lascia vuoto)*
-   - **Build output directory:** `/`  (la root del progetto)
-4. **Save and Deploy**. Fine: Cloudflare pubblica i file statici.
+Il repo contiene `wrangler.jsonc`, che dice a Cloudflare di pubblicare come
+sito statico il contenuto di `public/`.
 
-> In alternativa puoi trascinare la cartella del progetto in **Pages → Upload assets**
-> per un deploy manuale senza Git.
+### Metodo A — dalla dashboard (consigliato, deploy automatico ad ogni push)
 
-Per un dominio personalizzato: **Pages → Custom domains → Set up a domain**.
+1. **Cloudflare Dashboard → Workers & Pages → Create → Import a repository**.
+2. Autorizza GitHub e seleziona **`mattiamodroni07-ai/portfolio_fotografo`**.
+3. Nella schermata *Set up your application*:
+   - **Build command:** *(lascia VUOTO)*
+   - **Deploy command:** `npx wrangler deploy`
+4. **Deploy**. Dopo ~1 minuto il sito è online su un indirizzo `*.workers.dev`.
+
+Da lì in poi, ogni `git push` sul branch di produzione aggiorna il sito.
+
+### Metodo B — dal tuo computer (una tantum)
+
+```bash
+npx wrangler deploy      # legge wrangler.jsonc e pubblica public/
+```
+(la prima volta ti chiede di fare login su Cloudflare)
+
+Per un dominio personalizzato: nel progetto → **Settings → Domains & Routes →
+Add**.
 
 ---
 
 ## 🖼️ Come sostituire le foto (placeholder → foto vere)
 
 Le immagini attuali sono **segnaposto SVG** eleganti, generati automaticamente.
-Per mettere le foto vere di Salvatore basta **sostituire i file** in `images/`
-mantenendo gli **stessi nomi**, oppure aggiornare i percorsi in `index.html`.
+Per mettere le foto vere di Salvatore basta **sostituire i file** in
+`public/images/` mantenendo gli **stessi nomi**, oppure aggiornare i percorsi in
+`public/index.html`.
 
 | File | Dove appare | Consigli |
 |------|-------------|----------|
-| `images/hero.svg` | Sfondo grande in alto | Foto orizzontale d'impatto (min. 1920px) |
-| `images/about.svg` | Sezione "Chi sono" | Ritratto verticale del fotografo |
-| `images/cta.svg` | Sezione "Contatti" | Foto orizzontale evocativa |
-| `images/gallery/01.svg … 12.svg` | Gallery portfolio | I tuoi scatti migliori |
+| `public/images/hero.svg` | Sfondo grande in alto | Foto orizzontale d'impatto (min. 1920px) |
+| `public/images/about.svg` | Sezione "Chi sono" | Ritratto verticale del fotografo |
+| `public/images/cta.svg` | Sezione "Contatti" | Foto orizzontale evocativa |
+| `public/images/gallery/01.svg … 12.svg` | Gallery portfolio | I tuoi scatti migliori |
 
 **Puoi usare file `.jpg`/`.webp`** al posto degli `.svg`: rinominali (es.
-`hero.jpg`) e aggiorna il `src` corrispondente in `index.html`. Consiglio:
+`hero.jpg`) e aggiorna il `src` corrispondente in `public/index.html`. Consiglio:
 esporta in **WebP** o **JPEG** con lato lungo ~2000px e peso < 400KB per foto.
 
 Per cambiare le **didascalie** della gallery (es. "Il sì", "Il primo ballo"),
-modifica i `<figcaption>` dentro `index.html`.
+modifica i `<figcaption>` dentro `public/index.html`.
 
 ### Logo
-`assets/logo.svg` è un logo segnaposto (monogramma "SL"). Sostituiscilo con il
-logo/foto profilo di Salvatore mantenendo il nome `logo.svg`, oppure aggiorna il
-riferimento in `index.html`. Lo stesso vale per `assets/favicon.svg`.
+`public/assets/logo.svg` è un logo segnaposto (monogramma "SL"). Sostituiscilo
+con il logo/foto profilo di Salvatore mantenendo il nome `logo.svg`, oppure
+aggiorna il riferimento in `public/index.html`. Lo stesso vale per
+`public/assets/favicon.svg`.
 
 I placeholder si possono rigenerare con:
 
@@ -61,7 +75,7 @@ node scripts/generate-placeholders.mjs
 
 ## ✍️ Come cambiare i testi e i contatti
 
-Tutti i testi sono in `index.html`, in italiano. Cerca e sostituisci in
+Tutti i testi sono in `public/index.html`, in italiano. Cerca e sostituisci in
 particolare:
 
 - **Email:** `info@salvatorelacalaprice.it` (compare in più punti + nel form)
@@ -72,7 +86,7 @@ particolare:
 ### Il form contatti
 Il form usa un `mailto:` (apre il programma di posta) — funziona senza backend.
 Se in futuro vuoi ricevere i messaggi via web, puoi collegarlo a un servizio
-come **Formspree**, **Web3Forms** o una **Cloudflare Pages Function**.
+come **Formspree**, **Web3Forms** o una **Cloudflare Function**.
 
 ---
 
@@ -80,32 +94,37 @@ come **Formspree**, **Web3Forms** o una **Cloudflare Pages Function**.
 
 ```
 .
-├── index.html                 # Pagina unica
-├── css/style.css              # Stili (tema dark cinematografico)
-├── js/main.js                 # Animazioni & interazioni (progressive enhancement)
-├── images/                    # Foto (placeholder SVG da sostituire)
-│   ├── hero.svg  about.svg  cta.svg
-│   └── gallery/01.svg … 12.svg
-├── assets/                    # logo.svg, favicon.svg
+├── public/                    # ← i file pubblici del sito (serviti online)
+│   ├── index.html             # Pagina unica
+│   ├── css/style.css          # Stili (tema dark cinematografico)
+│   ├── js/main.js             # Animazioni & interazioni (progressive enhancement)
+│   ├── js/lib/                # GSAP, ScrollTrigger, Lenis, SplitType (in locale)
+│   ├── images/                # Foto (placeholder SVG da sostituire)
+│   │   ├── hero.svg  about.svg  cta.svg
+│   │   └── gallery/01.svg … 12.svg
+│   ├── assets/                # logo.svg, favicon.svg
+│   ├── _headers               # Header/cache per Cloudflare
+│   └── robots.txt
 ├── scripts/generate-placeholders.mjs
-├── _headers                   # Header/cache per Cloudflare Pages
-└── robots.txt
+└── wrangler.jsonc             # Config di deploy Cloudflare (serve public/)
 ```
 
 ## 🛠️ Anteprima in locale
 
-Apri `index.html` nel browser, oppure avvia un piccolo server:
+Apri `public/index.html` nel browser, oppure avvia un piccolo server dalla
+cartella `public/`:
 
 ```bash
-python3 -m http.server 8000
+python3 -m http.server 8000 -d public
 # poi visita http://localhost:8000
 ```
 
 ## 🧩 Note tecniche
 
 - Animazioni con **GSAP + ScrollTrigger**, smooth scroll con **Lenis**, testo
-  con **SplitType** (caricati da CDN). Se una libreria non si carica, il sito
-  resta comunque leggibile e navigabile.
+  con **SplitType** — le librerie sono **incluse in locale** (`public/js/lib/`),
+  quindi nessuna dipendenza da CDN. Se qualcosa non si carica, il sito resta
+  comunque leggibile e navigabile.
 - Rispetta `prefers-reduced-motion`: chi ha ridotto le animazioni vede una
   versione statica.
 - Responsive (desktop / tablet / mobile). Su mobile la gallery si scorre con lo swipe.

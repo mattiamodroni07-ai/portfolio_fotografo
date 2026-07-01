@@ -13,7 +13,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-const IMG = join(ROOT, "images");
+const IMG = join(ROOT, "public", "images");
 mkdirSync(join(IMG, "gallery"), { recursive: true });
 
 const GOLD = "#c9a271";
