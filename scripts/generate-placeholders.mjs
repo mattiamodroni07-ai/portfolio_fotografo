@@ -28,7 +28,14 @@ const PALETTES = [
   ["#1c1614", "#090706"], // neutro caldo
 ];
 
+// I caratteri &, <, > non sono validi nel testo/attributi XML: vanno "escapati".
+function esc(s) {
+  return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
 function svg({ w, h, index, label, sub, seed }) {
+  label = esc(label);
+  sub = esc(sub);
   const [c1, c2] = PALETTES[(index - 1) % PALETTES.length];
   const angle = 25 + ((index * 37) % 60);
   const cx = 20 + ((index * 53) % 60);
@@ -99,6 +106,16 @@ const gallery = [
 gallery.forEach(([w, h], i) => {
   const n = String(i + 1).padStart(2, "0");
   write(`gallery/${n}.svg`, svg({ w, h, index: i + 1, label: `N° ${n}`, sub: "SOSTITUISCI CON LA TUA FOTO", seed: (i + 1) * 11 }));
+});
+
+// Foto sposi per le testimonianze (ritratti verticali)
+const couples = [
+  ["Giulia & Marco", 5],
+  ["Sara & Luca", 9],
+  ["Elena & Davide", 3],
+];
+couples.forEach(([name, idx], i) => {
+  write(`testimonials/${i + 1}.svg`, svg({ w: 900, h: 1100, index: idx, label: name.toUpperCase(), sub: "FOTO SPOSI — SEGNAPOSTO", seed: (i + 1) * 17 }));
 });
 
 console.log("\nFatto. Placeholder generati in /images.");

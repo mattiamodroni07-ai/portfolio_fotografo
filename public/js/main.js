@@ -30,6 +30,8 @@
     initLightbox();
     initForm();
     initToTop();
+    initTubelight();
+    initTestimonials();
 
     if (HAS_GSAP && !REDUCED) {
       document.documentElement.classList.add("gsap-ready");
@@ -37,6 +39,7 @@
       try { initParallax(); } catch (e) {}
       try { initPortfolio(); } catch (e) {}
       try { initMarquee(); } catch (e) {}
+      try { initVelocity(); } catch (e) {}
       try { initScrollProgress(); } catch (e) {}
     }
 
@@ -414,6 +417,125 @@
   function initToTop() {
     var btn = $("#toTop"); if (!btn) return;
     btn.addEventListener("click", function () { scrollToTarget("#hero"); });
+  }
+
+  /* ---------- Tubelight navbar: indicatore luminoso sulla voce attiva ---------- */
+  function initTubelight() {
+    var tube = $("#tube"); if (!tube) return;
+    var lamp = $("#tubeLamp");
+    var links = $$(".tube__link", tube);
+    if (!links.length) return;
+
+    function moveLamp(link) {
+      if (!lamp || !link) return;
+      lamp.style.left = link.offsetLeft + "px";
+      lamp.style.width = link.offsetWidth + "px";
+    }
+    function setActive(link) {
+      links.forEach(function (l) { l.classList.toggle("is-active", l === link); });
+      moveLamp(link);
+    }
+    function currentActive() { return tube.querySelector(".tube__link.is-active") || links[0]; }
+
+    requestAnimationFrame(function () { moveLamp(currentActive()); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { moveLamp(currentActive()); });
+    window.addEventListener("resize", function () { moveLamp(currentActive()); });
+    links.forEach(function (link) { link.addEventListener("click", function () { setActive(link); }); });
+
+    // Scroll-spy: attiva la voce in base alla sezione visibile
+    var map = {};
+    links.forEach(function (l) { var s = document.getElementById(l.dataset.sec); if (s) map[l.dataset.sec] = l; });
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting && map[en.target.id]) setActive(map[en.target.id]); });
+      }, { rootMargin: "-45% 0px -50% 0px", threshold: 0 });
+      Object.keys(map).forEach(function (id) { var s = document.getElementById(id); if (s) io.observe(s); });
+    }
+  }
+
+  /* ---------- Scroll velocity: due file di foto reattive allo scroll ---------- */
+  function initVelocity() {
+    var rows = $$(".velocity__row");
+    if (!rows.length || !HAS_GSAP || REDUCED) return;
+    rows.forEach(function (row) {
+      var track = row.querySelector(".velocity__track"); if (!track) return;
+      var v = parseFloat(row.dataset.velocity) || 2;
+      var base = Math.max(0.4, Math.abs(v) / 2.2);
+      var goLeft = v > 0;
+      gsap.set(track, { xPercent: goLeft ? 0 : -50 });
+      var tw = gsap.to(track, { xPercent: goLeft ? -50 : 0, duration: 30, ease: "none", repeat: -1 });
+      tw.timeScale(base);
+      if (!HAS_ST) return;
+      var target = 1;
+      ScrollTrigger.create({
+        onUpdate: function (self) { target = 1 + Math.min(Math.abs(self.getVelocity()) / 300, 5); }
+      });
+      gsap.ticker.add(function () { target += (1 - target) * 0.05; tw.timeScale(base * target); });
+    });
+  }
+
+  /* ---------- Testimonianze circolari ---------- */
+  function initTestimonials() {
+    var wrap = $("#testiImages"); if (!wrap) return;
+    var imgs = $$("img", wrap);
+    var nameEl = $("#testiName"), roleEl = $("#testiRole"), quoteEl = $("#testiQuote");
+    var prev = $("#testiPrev"), next = $("#testiNext");
+    if (!imgs.length || !quoteEl) return;
+
+    var data = [
+      { name: "Giulia & Marco", role: "Matrimonio a Villa Reale — Giugno 2024",
+        quote: "Salvatore ha catturato la nostra giornata in un modo che ancora ci emoziona. Guardando le foto rivivamo ogni momento, esattamente come lo abbiamo sentito." },
+      { name: "Sara & Luca", role: "Matrimonio sul lago — Settembre 2023",
+        quote: "Discreto, gentile, invisibile al punto giusto. Non ci siamo mai sentiti in posa, eppure ogni scatto è perfetto. Le nostre famiglie sono ancora senza parole." },
+      { name: "Elena & Davide", role: "Cerimonia in campagna — Maggio 2024",
+        quote: "Cercavamo qualcuno che raccontasse la verità del nostro giorno, non foto finte. Abbiamo trovato molto di più: un vero narratore di emozioni." }
+    ];
+    var n = imgs.length, active = 0, timer = null;
+
+    function place(i) {
+      var img = imgs[i];
+      var isLeft = (active - 1 + n) % n === i;
+      var isRight = (active + 1) % n === i;
+      if (i === active) { img.style.transform = "translateX(0) scale(1) rotateY(0deg)"; img.style.opacity = "1"; img.style.zIndex = "3"; }
+      else if (isLeft) { img.style.transform = "translateX(-48%) scale(0.85) rotateY(14deg)"; img.style.opacity = "0.45"; img.style.zIndex = "2"; }
+      else if (isRight) { img.style.transform = "translateX(48%) scale(0.85) rotateY(-14deg)"; img.style.opacity = "0.45"; img.style.zIndex = "2"; }
+      else { img.style.transform = "translateX(0) scale(0.8)"; img.style.opacity = "0"; img.style.zIndex = "1"; }
+    }
+    function renderQuote(text) {
+      quoteEl.innerHTML = "";
+      text.split(" ").forEach(function (w, i) {
+        var s = document.createElement("span");
+        s.textContent = w + " ";
+        s.style.filter = "blur(10px)"; s.style.opacity = "0"; s.style.transform = "translateY(6px)";
+        s.style.transition = "filter .5s ease, opacity .5s ease, transform .5s ease";
+        s.style.transitionDelay = (0.025 * i) + "s";
+        quoteEl.appendChild(s);
+        requestAnimationFrame(function () { requestAnimationFrame(function () {
+          s.style.filter = "blur(0)"; s.style.opacity = "1"; s.style.transform = "none";
+        }); });
+      });
+    }
+    function update() {
+      for (var i = 0; i < n; i++) place(i);
+      var d = data[active % data.length];
+      if (nameEl) nameEl.textContent = d.name;
+      if (roleEl) roleEl.textContent = d.role;
+      renderQuote(d.quote);
+    }
+    function go(dir) { active = (active + dir + n) % n; update(); restart(); }
+    function restart() { if (timer) clearInterval(timer); timer = setInterval(function () { go(1); }, 5000); }
+
+    if (prev) prev.addEventListener("click", function () { go(-1); });
+    if (next) next.addEventListener("click", function () { go(1); });
+    imgs.forEach(function (img, i) { img.addEventListener("click", function () { if (i !== active) { active = i; update(); restart(); } }); });
+
+    update(); restart();
+    var section = $("#testimonials");
+    if (section && "IntersectionObserver" in window) {
+      new IntersectionObserver(function (e) {
+        e.forEach(function (en) { if (en.isIntersecting) restart(); else if (timer) { clearInterval(timer); timer = null; } });
+      }, { threshold: 0.15 }).observe(section);
+    }
   }
 
   /* ---------- Avvio ---------- */

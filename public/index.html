@@ -44,11 +44,28 @@
     <a href="#hero" class="nav__logo" data-magnetic aria-label="Salvatore Lacalaprice — home">
       <img src="assets/logo.svg" alt="Salvatore Lacalaprice" />
     </a>
-    <nav class="nav__links">
-      <a href="#about" data-link>Chi sono</a>
-      <a href="#portfolio" data-link>Portfolio</a>
-      <a href="#servizi" data-link>Servizi</a>
-      <a href="#contatti" data-link>Contatti</a>
+    <nav class="tube" id="tube" aria-label="Navigazione principale">
+      <span class="tube__lamp" id="tubeLamp" aria-hidden="true"><i class="tube__bar"></i></span>
+      <a href="#hero" class="tube__link is-active" data-link data-sec="hero">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 4l9 6.5"/><path d="M5 9.5V20h14V9.5"/></svg>
+        <span>Home</span>
+      </a>
+      <a href="#about" class="tube__link" data-link data-sec="about">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg>
+        <span>Chi sono</span>
+      </a>
+      <a href="#portfolio" class="tube__link" data-link data-sec="portfolio">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.2"/><path d="M8 6l1.5-2h5L16 6"/></svg>
+        <span>Portfolio</span>
+      </a>
+      <a href="#servizi" class="tube__link" data-link data-sec="servizi">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.3-7-9.3A3.7 3.7 0 0 1 12 8a3.7 3.7 0 0 1 7 2.7c0 5-7 9.3-7 9.3Z"/></svg>
+        <span>Servizi</span>
+      </a>
+      <a href="#contatti" class="tube__link" data-link data-sec="contatti">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>
+        <span>Contatti</span>
+      </a>
     </nav>
     <button class="nav__toggle" id="menuToggle" aria-label="Apri menu" aria-expanded="false" data-magnetic>
       <span></span><span></span>
@@ -154,6 +171,22 @@
       </div>
     </section>
 
+    <!-- ===== SCROLL VELOCITY (photo band) ===== -->
+    <section class="velocity" aria-label="Galleria in movimento">
+      <div class="velocity__row" data-velocity="2.2">
+        <div class="velocity__track">
+          <img src="images/gallery/01.svg" alt="" /><img src="images/gallery/02.svg" alt="" /><img src="images/gallery/03.svg" alt="" /><img src="images/gallery/04.svg" alt="" /><img src="images/gallery/05.svg" alt="" /><img src="images/gallery/06.svg" alt="" />
+          <img src="images/gallery/01.svg" alt="" /><img src="images/gallery/02.svg" alt="" /><img src="images/gallery/03.svg" alt="" /><img src="images/gallery/04.svg" alt="" /><img src="images/gallery/05.svg" alt="" /><img src="images/gallery/06.svg" alt="" />
+        </div>
+      </div>
+      <div class="velocity__row" data-velocity="-2.2">
+        <div class="velocity__track">
+          <img src="images/gallery/07.svg" alt="" /><img src="images/gallery/08.svg" alt="" /><img src="images/gallery/09.svg" alt="" /><img src="images/gallery/10.svg" alt="" /><img src="images/gallery/11.svg" alt="" /><img src="images/gallery/12.svg" alt="" />
+          <img src="images/gallery/07.svg" alt="" /><img src="images/gallery/08.svg" alt="" /><img src="images/gallery/09.svg" alt="" /><img src="images/gallery/10.svg" alt="" /><img src="images/gallery/11.svg" alt="" /><img src="images/gallery/12.svg" alt="" />
+        </div>
+      </div>
+    </section>
+
     <!-- ===== SERVICES ===== -->
     <section class="services" id="servizi">
       <div class="services__head">
@@ -184,12 +217,30 @@
       </div>
     </section>
 
-    <!-- ===== QUOTE ===== -->
-    <section class="quote">
-      <blockquote class="quote__text reveal-line">
-        <em>&ldquo;</em>Non fotografo semplicemente un matrimonio. Custodisco il ricordo di un giorno che non tornerà, così come lo avete vissuto.<em>&rdquo;</em>
-      </blockquote>
-      <p class="quote__author reveal-line">— Salvatore Lacalaprice</p>
+    <!-- ===== TESTIMONIALS (circular) ===== -->
+    <section class="testi" id="testimonials">
+      <div class="testi__head">
+        <p class="eyebrow reveal-line">Le parole degli sposi</p>
+        <h2 class="h2 reveal-line">Chi mi ha già <em>scelto</em>.</h2>
+      </div>
+      <div class="testi__grid">
+        <div class="testi__images" id="testiImages">
+          <img src="images/testimonials/1.svg" alt="Giulia & Marco" data-index="0" />
+          <img src="images/testimonials/2.svg" alt="Sara & Luca" data-index="1" />
+          <img src="images/testimonials/3.svg" alt="Elena & Davide" data-index="2" />
+        </div>
+        <div class="testi__content">
+          <div class="testi__text">
+            <h3 class="testi__name" id="testiName">Giulia &amp; Marco</h3>
+            <p class="testi__role" id="testiRole">Matrimonio a Villa Reale — Giugno 2024</p>
+            <p class="testi__quote" id="testiQuote">Salvatore ha catturato la nostra giornata in un modo che ancora ci emoziona. Guardando le foto rivivamo ogni momento, esattamente come lo abbiamo sentito.</p>
+          </div>
+          <div class="testi__arrows">
+            <button class="testi__arrow" id="testiPrev" aria-label="Testimonianza precedente">&#8592;</button>
+            <button class="testi__arrow" id="testiNext" aria-label="Testimonianza successiva">&#8594;</button>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- ===== CTA / CONTATTI ===== -->
