@@ -1,18 +1,12 @@
-# Header per Cloudflare Pages
-# https://developers.cloudflare.com/pages/configuration/headers/
+# Header per Cloudflare (Pages/Workers static assets)
+# https://developers.cloudflare.com/workers/static-assets/headers/
 
 /*
   X-Content-Type-Options: nosniff
   X-Frame-Options: SAMEORIGIN
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), microphone=(), camera=()
-
-# Cache lunga per gli asset statici
-/css/*
-  Cache-Control: public, max-age=31536000, immutable
-/js/*
-  Cache-Control: public, max-age=31536000, immutable
-/images/*
-  Cache-Control: public, max-age=31536000, immutable
-/assets/*
-  Cache-Control: public, max-age=31536000, immutable
+  # I file hanno nomi fissi (non hashati): il browser deve SEMPRE ricontrollare
+  # col server se sono cambiati (risposta 304 se identici, quindi resta veloce).
+  # Cosi' ogni aggiornamento si vede subito, senza cache "immutable" appiccicosa.
+  Cache-Control: public, no-cache
