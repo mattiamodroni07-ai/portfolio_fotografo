@@ -20,7 +20,7 @@
 
   function init() {
     setYear();
-    initPreloader();
+    revealHero();
     initLenis();
     initCursor();
     initNav();
@@ -38,7 +38,6 @@
       try { initReveals(); } catch (e) {}
       try { initParallax(); } catch (e) {}
       try { initPortfolio(); } catch (e) {}
-      try { initMarquee(); } catch (e) {}
       try { initVelocity(); } catch (e) {}
       try { initScrollProgress(); } catch (e) {}
     }
@@ -57,47 +56,7 @@
     var y = $("#year"); if (y) y.textContent = new Date().getFullYear();
   }
 
-  /* ---------- Preloader ---------- */
-  function initPreloader() {
-    var pre = $("#preloader");
-    if (!pre) { revealHero(); return; }
-    var bar = $(".preloader__bar span", pre);
-    var count = $(".preloader__count", pre);
-
-    function done() {
-      if (pre.dataset.done) return;
-      pre.dataset.done = "1";
-      if (HAS_GSAP) {
-        gsap.to(pre, { yPercent: -100, duration: 1, ease: "power4.inOut",
-          onComplete: function () { pre.style.display = "none"; } });
-      } else {
-        pre.style.transition = "opacity .6s"; pre.style.opacity = "0";
-        setTimeout(function () { pre.style.display = "none"; }, 600);
-      }
-      revealHero();
-    }
-
-    // Failsafe assoluto
-    setTimeout(done, 4200);
-
-    if (HAS_GSAP && !REDUCED) {
-      var obj = { v: 0 };
-      gsap.to(obj, {
-        v: 100, duration: 1.6, ease: "power2.inOut",
-        onUpdate: function () {
-          var val = Math.round(obj.v);
-          if (count) count.textContent = val;
-          if (bar) bar.style.width = val + "%";
-        },
-        onComplete: function () { gsap.delayedCall(0.15, done); }
-      });
-    } else {
-      if (bar) bar.style.width = "100%";
-      if (count) count.textContent = "100";
-      setTimeout(done, 500);
-    }
-  }
-
+  /* ---------- Ingresso hero ---------- */
   function revealHero() {
     if (!HAS_GSAP || REDUCED) return;
     var tl = gsap.timeline({ defaults: { ease: "power4.out" } });
@@ -329,23 +288,6 @@
         pin: true, animation: tween, scrub: 1, anticipatePin: 1, invalidateOnRefresh: true
       });
     });
-  }
-
-  /* ---------- Marquee con reattivita' alla velocita' ---------- */
-  function initMarquee() {
-    var track = $("#marquee"); if (!track) return;
-    var mq = gsap.to(track, { xPercent: -50, repeat: -1, duration: 26, ease: "none" });
-    if (!HAS_ST) return;
-    var target = 1;
-    ScrollTrigger.create({
-      onUpdate: function (self) {
-        var v = self.getVelocity();
-        target = 1 + Math.min(Math.abs(v) / 320, 5);
-        gsap.to(track, { skewX: gsap.utils.clamp(-6, 6, v / 500), duration: 0.4, overwrite: "auto" });
-      }
-    });
-    // La velocita' torna dolcemente al valore base (direzione sempre costante)
-    gsap.ticker.add(function () { target += (1 - target) * 0.05; mq.timeScale(target); });
   }
 
   /* ---------- Barra di progresso ---------- */
