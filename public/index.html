@@ -3,15 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Salvatore Lacalaprice — Fotografo di Matrimoni & Eventi</title>
-  <meta name="description" content="Salvatore Lacalaprice, fotografo di matrimoni ed eventi. Racconto emozioni autentiche con uno sguardo cinematografico. Scopri il portfolio, i servizi e contattami." />
+  <title>Salvatore Lacalaprice · Full Frame — Fotografo di Matrimoni & Eventi</title>
+  <meta name="description" content="Full Frame è lo studio di Salvatore Lacalaprice, fotografo di matrimoni ed eventi. Racconto emozioni autentiche con uno sguardo cinematografico. Scopri il portfolio, i servizi e contattami." />
   <meta name="theme-color" content="#0a0807" />
+  <link rel="canonical" href="https://salvatorelacalaprice.com/" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Salvatore Lacalaprice — Fotografo di Matrimoni & Eventi" />
-  <meta property="og:description" content="Racconto emozioni autentiche con uno sguardo cinematografico." />
-  <meta property="og:image" content="images/hero.svg" />
+  <meta property="og:site_name" content="Full Frame — Salvatore Lacalaprice" />
+  <meta property="og:url" content="https://salvatorelacalaprice.com/" />
+  <meta property="og:title" content="Salvatore Lacalaprice · Full Frame — Fotografo di Matrimoni & Eventi" />
+  <meta property="og:description" content="Full Frame, lo studio di Salvatore Lacalaprice. Racconto emozioni autentiche con uno sguardo cinematografico." />
+  <meta property="og:image" content="https://salvatorelacalaprice.com/images/hero.svg" />
 
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
 
@@ -22,6 +25,23 @@
 
   <link rel="stylesheet" href="css/style.css?v=2" />
   <noscript><style>#preloader{display:none!important}</style></noscript>
+
+  <!-- Dati strutturati: legano lo studio "Full Frame" al fotografo e al dominio -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Full Frame",
+    "alternateName": "Full Frame di Salvatore Lacalaprice",
+    "description": "Studio di fotografia per matrimoni ed eventi di Salvatore Lacalaprice.",
+    "url": "https://salvatorelacalaprice.com/",
+    "image": "https://salvatorelacalaprice.com/images/hero.svg",
+    "email": "info@salvatorelacalaprice.it",
+    "founder": { "@type": "Person", "name": "Salvatore Lacalaprice" },
+    "areaServed": "Italia",
+    "knowsAbout": ["Fotografia di matrimonio", "Fotografia di eventi", "Ritratti"]
+  }
+  </script>
 </head>
 <body>
 
@@ -42,7 +62,7 @@
   <!-- ===== Navbar ===== -->
   <header class="nav" id="nav">
     <a href="#hero" class="nav__logo" data-magnetic aria-label="Salvatore Lacalaprice — home">
-      <img src="assets/logo.svg" alt="Salvatore Lacalaprice" />
+      <img src="assets/logo.svg" alt="Full Frame — Salvatore Lacalaprice" />
     </a>
     <nav class="tube" id="tube" aria-label="Navigazione principale">
       <span class="tube__lamp" id="tubeLamp" aria-hidden="true"><i class="tube__bar"></i></span>
@@ -95,7 +115,7 @@
         <div class="hero__scrim"></div>
       </div>
       <div class="hero__content">
-        <p class="hero__eyebrow reveal-fade"><span>Fotografo di matrimoni &amp; eventi</span></p>
+        <p class="hero__eyebrow reveal-fade"><span>Full Frame · Fotografo di matrimoni &amp; eventi</span></p>
         <h1 class="hero__title">
           <span class="line"><span>Salvatore</span></span>
           <span class="line"><span><em>Lacalaprice</em></span></span>
@@ -130,7 +150,7 @@
         <p class="eyebrow reveal-line">01 — Chi sono</p>
         <h2 class="h2 reveal-line">Dietro l'obiettivo, un cacciatore di <em>emozioni</em>.</h2>
         <div class="about__text">
-          <p class="reveal-line">Mi chiamo Salvatore Lacalaprice e da oltre dieci anni trasformo momenti irripetibili in immagini che durano per sempre. Credo che la fotografia migliore sia quella che non si nota: quella in cui le persone si dimenticano della macchina e vivono, semplicemente.</p>
+          <p class="reveal-line">Mi chiamo Salvatore Lacalaprice e con il mio studio, <em>Full Frame</em>, da oltre dieci anni trasformo momenti irripetibili in immagini che durano per sempre. Credo che la fotografia migliore sia quella che non si nota: quella in cui le persone si dimenticano della macchina e vivono, semplicemente.</p>
           <p class="reveal-line">Il mio stile è discreto e cinematografico. Cerco la luce vera, i gesti spontanei, le lacrime e le risate. Non metto in posa la vita: la aspetto, la osservo e la fermo nell'istante perfetto.</p>
         </div>
         <a href="#portfolio" class="link-underline reveal-line" data-link>Scopri il mio lavoro</a>
@@ -275,6 +295,7 @@
           <a href="mailto:info@salvatorelacalaprice.it" class="link-underline" data-link>info@salvatorelacalaprice.it</a>
           <a href="tel:+390000000000" class="link-underline" data-link>+39 000 000 0000</a>
         </div>
+        <p class="cta__brand">Full Frame · Studio fotografico di Salvatore Lacalaprice</p>
       </div>
     </section>
   </main>
@@ -282,7 +303,10 @@
   <!-- ===== FOOTER ===== -->
   <footer class="footer">
     <div class="footer__top">
-      <a href="#hero" class="footer__brand" data-link>Salvatore<br /><em>Lacalaprice</em></a>
+      <div class="footer__brandwrap">
+        <a href="#hero" class="footer__brand" data-link>Salvatore<br /><em>Lacalaprice</em></a>
+        <span class="footer__brandtag">Full Frame · Studio fotografico</span>
+      </div>
       <div class="footer__cols">
         <div>
           <span class="footer__label">Menu</span>
@@ -304,7 +328,7 @@
       </div>
     </div>
     <div class="footer__bottom">
-      <span>© <span id="year">2026</span> Salvatore Lacalaprice — Tutti i diritti riservati</span>
+      <span>© <span id="year">2026</span> Full Frame di Salvatore Lacalaprice · P.IVA 00000000000 — Tutti i diritti riservati</span>
       <button class="footer__top-btn" id="toTop" data-magnetic>Torna su ↑</button>
     </div>
   </footer>

@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 
 # Aggiorna con l'URL reale dopo la pubblicazione:
-# Sitemap: https://salvatorelacalaprice.it/sitemap.xml
+# Sitemap: https://salvatorelacalaprice.com/sitemap.xml

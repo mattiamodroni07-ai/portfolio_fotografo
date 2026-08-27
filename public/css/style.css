@@ -411,11 +411,14 @@ body.menu-open .nav__toggle span:nth-child(2) { transform: translateY(-3.5px) ro
 .cta__form .btn--gold { grid-column: 1 / -1; justify-self: center; margin-top: 0.6rem; }
 .cta__note { grid-column: 1/-1; text-align: center; font-size: 0.85rem; color: var(--gold-2); min-height: 1.2em; }
 .cta__direct { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-top: 2.6rem; }
+.cta__brand { margin-top: 1.6rem; font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-dim); }
 
 /* ---------- Footer ---------- */
 .footer { border-top: 1px solid var(--line-soft); padding: clamp(3rem, 8vh, 6rem) var(--pad) 2rem; }
 .footer__top { display: flex; justify-content: space-between; gap: 3rem; flex-wrap: wrap; max-width: var(--maxw); margin: 0 auto; }
+.footer__brandwrap { display: flex; flex-direction: column; }
 .footer__brand { font-family: var(--serif); font-size: clamp(1.8rem, 4vw, 3rem); line-height: 1; }
+.footer__brandtag { margin-top: 0.7rem; font-family: var(--sans); font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); }
 .footer__cols { display: flex; gap: clamp(2rem, 6vw, 5rem); flex-wrap: wrap; }
 .footer__cols div { display: flex; flex-direction: column; gap: 0.6rem; }
 .footer__label { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }

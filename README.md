@@ -1,6 +1,10 @@
-# Salvatore Lacalaprice — Portfolio
+# Salvatore Lacalaprice · Full Frame — Portfolio
 
 Sito portfolio per **Salvatore Lacalaprice**, fotografo di matrimoni ed eventi.
+**Full Frame** è il nome dello studio: sul sito compare in modo secondario
+(occhiello hero, sezione "Chi sono", contatti, footer/copyright e meta SEO),
+mentre **Salvatore Lacalaprice** resta l'identità in primo piano.
+Dominio previsto: **salvatorelacalaprice.com**.
 Tema **dark cinematografico** con animazioni scroll-driven (parallax, gallery
 orizzontale, reveal, cursore personalizzato).
 
@@ -81,6 +85,8 @@ particolare:
 - **Email:** `info@salvatorelacalaprice.it` (compare in più punti + nel form)
 - **Telefono:** `+39 000 000 0000`
 - **Social:** i link `Instagram` / `Facebook` hanno `href="#"` — inserisci gli URL reali
+- **P.IVA Full Frame:** nel footer c'è il segnaposto `P.IVA 00000000000` — sostituiscilo con la partita IVA reale
+- **Nome studio:** "Full Frame" compare nell'occhiello hero, in *Chi sono*, nei *Contatti* e nel copyright (`Full Frame di Salvatore Lacalaprice`)
 - Testi di *Chi sono*, *Servizi*, *Statistiche* (numeri in `data-count`) e *Contatti*
 
 ### Il form contatti
