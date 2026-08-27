@@ -2,6 +2,9 @@
 # https://developers.cloudflare.com/workers/static-assets/headers/
 
 /*
+  # ⚠️ TEMPORANEO — tiene il sito FUORI dai risultati di ricerca finché è in lavorazione.
+  # RIMUOVERE questa riga (e il meta "robots" in index.html) quando il sito è pronto.
+  X-Robots-Tag: noindex, nofollow
   X-Content-Type-Options: nosniff
   X-Frame-Options: SAMEORIGIN
   Referrer-Policy: strict-origin-when-cross-origin
