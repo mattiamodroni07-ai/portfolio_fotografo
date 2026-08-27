@@ -17,6 +17,7 @@
   if (HAS_ST) { try { gsap.registerPlugin(ScrollTrigger); } catch (e) {} }
 
   var lenis = null;
+  var openLightbox = function () {}; // assegnata da initLightbox, usata dalla gallery
 
   function init() {
     setYear();
@@ -28,6 +29,7 @@
     initMagnetic();
     initCounters();
     initLightbox();
+    initGallery();
     initForm();
     initToTop();
     initTubelight();
@@ -37,7 +39,6 @@
       document.documentElement.classList.add("gsap-ready");
       try { initReveals(); } catch (e) {}
       try { initParallax(); } catch (e) {}
-      try { initPortfolio(); } catch (e) {}
       try { initVelocity(); } catch (e) {}
       try { initScrollProgress(); } catch (e) {}
     }
@@ -275,18 +276,103 @@
     });
   }
 
-  /* ---------- Portfolio orizzontale (desktop) ---------- */
-  function initPortfolio() {
-    var track = $("#portfolioTrack"), pin = $("#portfolioPin");
-    if (!track || !pin || !gsap.matchMedia) return;
-    var mm = gsap.matchMedia();
-    mm.add("(min-width: 901px)", function () {
-      var amount = function () { return track.scrollWidth - window.innerWidth; };
-      var tween = gsap.to(track, { x: function () { return -amount(); }, ease: "none" });
-      ScrollTrigger.create({
-        trigger: pin, start: "top top", end: function () { return "+=" + amount(); },
-        pin: true, animation: tween, scrub: 1, anticipatePin: 1, invalidateOnRefresh: true
+  /* ---------- Gallery: categorie → eventi → foto ---------- */
+  function initGallery() {
+    var host = $("#galleryCats");
+    var data = window.GALLERY;
+    if (!host || !data || !data.length) return;
+
+    var arch = $("#archive"), body = $("#archiveBody"), title = $("#archiveTitle"),
+        back = $("#archiveBack"), close = $("#archiveClose");
+    var level = 0, curCat = 0;
+
+    function esc(s) {
+      return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
       });
+    }
+
+    // ---- Livello 1: card categoria (in pagina) ----
+    data.forEach(function (cat, ci) {
+      var n = (cat.eventi || []).length;
+      var card = document.createElement("button");
+      card.className = "gcat reveal-card"; card.type = "button";
+      card.setAttribute("aria-label", cat.nome + " — " + n + (n === 1 ? " evento" : " eventi"));
+      card.innerHTML =
+        '<span class="gcat__media"><img src="' + esc(cat.cover) + '" alt="" loading="lazy" /></span>' +
+        '<span class="gcat__meta"><span class="gcat__name">' + esc(cat.nome) + '</span>' +
+        '<span class="gcat__count">' + n + (n === 1 ? " evento" : " eventi") + '</span></span>';
+      card.addEventListener("click", function () { openCategory(ci); });
+      host.appendChild(card);
+    });
+
+    if (!arch) return; // senza overlay, le card restano decorative
+
+    function openArchive() { arch.classList.add("is-open"); arch.setAttribute("aria-hidden", "false"); }
+    function closeArchive() { arch.classList.remove("is-open"); arch.setAttribute("aria-hidden", "true"); level = 0; }
+
+    // ---- Livello 2: lista eventi ----
+    function openCategory(ci) {
+      curCat = ci; level = 1;
+      var cat = data[ci];
+      title.textContent = cat.nome;
+      body.className = "archive__body archive__body--events";
+      body.innerHTML = "";
+      body.scrollTop = 0;
+      var eventi = cat.eventi || [];
+      if (!eventi.length) {
+        body.innerHTML = '<p class="archive__empty">Nessun evento ancora pubblicato in questa categoria.</p>';
+      } else {
+        eventi.forEach(function (ev, ei) {
+          var cover = (ev.foto && ev.foto[0]) || cat.cover;
+          var nf = (ev.foto || []).length;
+          var c = document.createElement("button");
+          c.className = "gevent"; c.type = "button";
+          c.innerHTML =
+            '<span class="gevent__media"><img src="' + esc(cover) + '" alt="" loading="lazy" /></span>' +
+            '<span class="gevent__meta">' +
+              '<span class="gevent__name">' + esc(ev.nome) + '</span>' +
+              (ev.info ? '<span class="gevent__info">' + esc(ev.info) + '</span>' : '') +
+              '<span class="gevent__count">' + nf + (nf === 1 ? " foto" : " foto") + '</span>' +
+            '</span>';
+          c.addEventListener("click", function () { openEvent(ci, ei); });
+          body.appendChild(c);
+        });
+      }
+      openArchive();
+    }
+
+    // ---- Livello 3: foto dell'evento ----
+    function openEvent(ci, ei) {
+      level = 2;
+      var ev = data[ci].eventi[ei];
+      title.textContent = ev.nome + (ev.info ? " — " + ev.info : "");
+      body.className = "archive__body archive__body--photos";
+      body.innerHTML = "";
+      body.scrollTop = 0;
+      var foto = ev.foto || [];
+      var caps = foto.map(function () { return ev.nome; });
+      foto.forEach(function (src, pi) {
+        var b = document.createElement("button");
+        b.className = "gphoto"; b.type = "button";
+        b.innerHTML = '<img src="' + esc(src) + '" alt="' + esc(ev.nome) + ' — foto ' + (pi + 1) + '" loading="lazy" />';
+        b.addEventListener("click", function () { openLightbox(foto, caps, pi); });
+        body.appendChild(b);
+      });
+    }
+
+    function goBack() {
+      if (level === 2) openCategory(curCat); // dalle foto torna agli eventi
+      else closeArchive();                    // dagli eventi torna al sito
+    }
+
+    if (back) back.addEventListener("click", goBack);
+    if (close) close.addEventListener("click", closeArchive);
+    document.addEventListener("keydown", function (e) {
+      if (e.key !== "Escape" || !arch.classList.contains("is-open")) return;
+      var lb = $("#lightbox");
+      if (lb && lb.classList.contains("is-open")) return; // il lightbox gestisce il proprio Esc
+      goBack();
     });
   }
 
@@ -298,40 +384,44 @@
     gsap.set(bar, { scaleX: 0, width: "100%" });
   }
 
-  /* ---------- Lightbox ---------- */
+  /* ---------- Lightbox (lista dinamica di foto) ---------- */
   function initLightbox() {
     var box = $("#lightbox"); if (!box) return;
     var img = $("#lbImg"), btnClose = $("#lbClose"), btnPrev = $("#lbPrev"), btnNext = $("#lbNext");
-    var shots = $$(".shot[data-lightbox]");
-    var srcs = shots.map(function (s) { return s.getAttribute("data-lightbox"); });
-    var i = 0;
+    var srcs = [], caps = [], i = 0;
 
     function show(n) {
+      if (!srcs.length) return;
       i = (n + srcs.length) % srcs.length;
       img.src = srcs[i];
-      var fig = shots[i].querySelector("figcaption");
-      img.alt = fig ? fig.textContent : "";
+      img.alt = caps[i] || "";
       if (HAS_GSAP) gsap.fromTo(img, { opacity: 0, scale: 0.98 }, { opacity: 1, scale: 1, duration: 0.5, ease: "power3.out" });
     }
-    function open(n) {
-      show(n); box.classList.add("is-open"); box.setAttribute("aria-hidden", "false");
+    function open(list, captions, n) {
+      srcs = list || []; caps = captions || [];
+      if (!srcs.length) return;
+      show(n || 0); box.classList.add("is-open"); box.setAttribute("aria-hidden", "false");
       if (lenis) lenis.stop();
     }
     function close() {
       box.classList.remove("is-open"); box.setAttribute("aria-hidden", "true");
-      if (lenis) lenis.start();
+      // Non riattivare lo scroll se l'archivio è ancora aperto sotto
+      var arch = $("#archive");
+      if (lenis && !(arch && arch.classList.contains("is-open"))) lenis.start();
     }
-    shots.forEach(function (s, n) { s.addEventListener("click", function () { open(n); }); });
     if (btnClose) btnClose.addEventListener("click", close);
     if (btnPrev) btnPrev.addEventListener("click", function (e) { e.stopPropagation(); show(i - 1); });
     if (btnNext) btnNext.addEventListener("click", function (e) { e.stopPropagation(); show(i + 1); });
     box.addEventListener("click", function (e) { if (e.target === box) close(); });
     document.addEventListener("keydown", function (e) {
       if (!box.classList.contains("is-open")) return;
-      if (e.key === "Escape") close();
+      // Blocca gli altri gestori (es. l'archivio) così Esc chiude SOLO il lightbox
+      if (e.key === "Escape") { e.stopImmediatePropagation(); close(); }
       else if (e.key === "ArrowLeft") show(i - 1);
       else if (e.key === "ArrowRight") show(i + 1);
     });
+
+    openLightbox = open; // esposta alla gallery
   }
 
   /* ---------- Form (mailto, nessun backend) ---------- */

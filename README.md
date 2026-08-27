@@ -54,14 +54,43 @@ Per mettere le foto vere di Salvatore basta **sostituire i file** in
 | `public/images/hero.svg` | Sfondo grande in alto | Foto orizzontale d'impatto (min. 1920px) |
 | `public/images/about.svg` | Sezione "Chi sono" | Ritratto verticale del fotografo |
 | `public/images/cta.svg` | Sezione "Contatti" | Foto orizzontale evocativa |
-| `public/images/gallery/01.svg … 12.svg` | Gallery portfolio | I tuoi scatti migliori |
+| `public/images/gallery/01.svg … 12.svg` | Foto di esempio della gallery | I tuoi scatti migliori |
 
 **Puoi usare file `.jpg`/`.webp`** al posto degli `.svg`: rinominali (es.
 `hero.jpg`) e aggiorna il `src` corrispondente in `public/index.html`. Consiglio:
 esporta in **WebP** o **JPEG** con lato lungo ~2000px e peso < 400KB per foto.
 
-Per cambiare le **didascalie** della gallery (es. "Il sì", "Il primo ballo"),
-modifica i `<figcaption>` dentro `public/index.html`.
+## 🗂️ La gallery per categorie (Matrimoni, Comunioni, Anniversari, Compleanni, Aziendali)
+
+Il portfolio è organizzato a **due livelli**:
+
+```
+CATEGORIA  →  EVENTI  →  FOTO
+```
+
+Tutto il contenuto della gallery si gestisce da **un solo file**:
+**`public/js/gallery-data.js`** (non serve toccare l'HTML). Dentro trovi 5
+categorie; per ognuna un elenco di **eventi**, e per ogni evento **nome, info e
+l'elenco delle foto**.
+
+**Per aggiungere un evento** (es. un nuovo matrimonio):
+1. Crea una cartella con le foto, es. `public/images/portfolio/matrimoni/giulia-marco/`
+2. In `gallery-data.js`, dentro la categoria giusta, copia un blocco e compilalo:
+   ```js
+   {
+     nome: "Giulia & Marco",
+     info: "Villa Reale — Giugno 2024",
+     foto: [
+       "images/portfolio/matrimoni/giulia-marco/01.jpg",
+       "images/portfolio/matrimoni/giulia-marco/02.jpg"
+     ]
+   }
+   ```
+   ⚠️ Nei percorsi **non** si scrive `public/`: si parte da `images/…`.
+
+La `cover:` di ogni categoria è l'immagine mostrata sulla card. Le foto di
+esempio ora puntano ai segnaposto `images/gallery/…`: sostituiscile con quelle
+vere.
 
 ### Logo
 `public/assets/logo.svg` è un logo segnaposto (monogramma "SL"). Sostituiscilo
