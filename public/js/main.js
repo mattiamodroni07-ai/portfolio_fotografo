@@ -298,10 +298,15 @@
       var card = document.createElement("button");
       card.className = "gcat reveal-card"; card.type = "button";
       card.setAttribute("aria-label", cat.nome + " — " + n + (n === 1 ? " evento" : " eventi"));
+      var idx = ("0" + (ci + 1)).slice(-2);
       card.innerHTML =
         '<span class="gcat__media"><img src="' + esc(cat.cover) + '" alt="" loading="lazy" /></span>' +
-        '<span class="gcat__meta"><span class="gcat__name">' + esc(cat.nome) + '</span>' +
-        '<span class="gcat__count">' + n + (n === 1 ? " evento" : " eventi") + '</span></span>';
+        '<span class="gcat__idx">' + idx + '</span>' +
+        '<span class="gcat__meta">' +
+          '<span class="gcat__name">' + esc(cat.nome) + '</span>' +
+          '<span class="gcat__count">' + n + (n === 1 ? " evento" : " eventi") + '</span>' +
+          '<span class="gcat__go">Scopri \u2192</span>' +
+        '</span>';
       card.addEventListener("click", function () { openCategory(ci); });
       host.appendChild(card);
     });
