@@ -26,7 +26,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="css/style.css?v=4" />
+  <link rel="stylesheet" href="css/style.css?v=5" />
 
   <!-- Dati strutturati: legano lo studio "Full Frame" al fotografo e al dominio -->
   <script type="application/ld+json">
@@ -108,7 +108,7 @@
         <div class="hero__scrim"></div>
       </div>
       <div class="hero__content">
-        <p class="hero__eyebrow reveal-fade"><span>Full Frame · Fotografo di matrimoni &amp; eventi</span></p>
+        <p class="hero__eyebrow reveal-fade"><span>Full Frame · Fotografo di <em class="hero__rot" id="heroRotator" data-words="matrimoni|eventi|cerimonie|ritratti|storie d'amore">matrimoni</em></span></p>
         <h1 class="hero__title">
           <span class="line"><span>Salvatore</span></span>
           <span class="line"><span><em>Lacalaprice</em></span></span>
@@ -188,24 +188,64 @@
         <article class="service reveal-card">
           <span class="service__num">01</span>
           <h3>Matrimoni</h3>
-          <p>Un racconto completo della tua giornata, dai preparativi all'ultimo ballo. Reportage naturale, senza pose forzate.</p>
+          <p>Il racconto completo della vostra giornata, dai preparativi all'ultimo ballo. Reportage naturale, senza pose forzate.</p>
         </article>
         <article class="service reveal-card">
           <span class="service__num">02</span>
-          <h3>Eventi &amp; Cerimonie</h3>
-          <p>Battesimi, comunioni, anniversari e feste private. Ogni celebrazione merita di essere ricordata con eleganza.</p>
+          <h3>Prime Comunioni</h3>
+          <p>Il giorno della comunione con delicatezza: la cerimonia, la famiglia, i dettagli e la festa.</p>
         </article>
         <article class="service reveal-card">
           <span class="service__num">03</span>
-          <h3>Ritratti &amp; Coppie</h3>
-          <p>Servizi in esterna o in studio, engagement e pre-wedding. Immagini intime che raccontano chi siete davvero.</p>
+          <h3>Anniversari</h3>
+          <p>Nozze d'argento, d'oro e ricorrenze speciali: emozioni che si rinnovano, fermate per sempre.</p>
         </article>
         <article class="service reveal-card">
           <span class="service__num">04</span>
+          <h3>Compleanni</h3>
+          <p>Feste e traguardi, dai 18 anni alle grandi occasioni, con spontaneità e uno sguardo cinematografico.</p>
+        </article>
+        <article class="service reveal-card">
+          <span class="service__num">05</span>
+          <h3>Eventi Aziendali</h3>
+          <p>Congressi, gala, inaugurazioni e ritratti corporate. Immagini curate per l'immagine della tua azienda.</p>
+        </article>
+        <article class="service reveal-card">
+          <span class="service__num">06</span>
           <h3>Album &amp; Stampe fine art</h3>
-          <p>Album artigianali e stampe di alta qualità, perché i ricordi più belli meritano di essere toccati, non solo guardati.</p>
+          <p>Album artigianali e stampe di alta qualità: i ricordi più belli meritano di essere toccati, non solo guardati.</p>
         </article>
       </div>
+    </section>
+
+    <!-- ===== COME LAVORO (processo) ===== -->
+    <section class="process" id="processo">
+      <div class="process__head">
+        <p class="eyebrow reveal-line">04 — Come lavoro</p>
+        <h2 class="h2 reveal-line">Dal primo <em>ciao</em> all'album.</h2>
+      </div>
+      <ol class="process__steps">
+        <li class="step reveal-card">
+          <span class="step__num">01</span>
+          <h3>Il primo contatto</h3>
+          <p>Scrivetemi del vostro evento: parliamo di date, luoghi e desideri, senza impegno.</p>
+        </li>
+        <li class="step reveal-card">
+          <span class="step__num">02</span>
+          <h3>Conosciamoci</h3>
+          <p>Un incontro, dal vivo o in videochiamata, per capirci e costruire il servizio su misura.</p>
+        </li>
+        <li class="step reveal-card">
+          <span class="step__num">03</span>
+          <h3>Il grande giorno</h3>
+          <p>Ci sono, discreto e presente. Voi vivete il momento: al racconto per immagini penso io.</p>
+        </li>
+        <li class="step reveal-card">
+          <span class="step__num">04</span>
+          <h3>La consegna</h3>
+          <p>Ricevete la galleria online e, se volete, l'album fine art. Un ricordo che resta per sempre.</p>
+        </li>
+      </ol>
     </section>
 
     <!-- ===== TESTIMONIALS (circular) ===== -->
@@ -234,11 +274,45 @@
       </div>
     </section>
 
+    <!-- ===== FAQ ===== -->
+    <section class="faq" id="faq">
+      <div class="faq__head">
+        <p class="eyebrow reveal-line">Domande frequenti</p>
+        <h2 class="h2 reveal-line">Prima di <em>scrivermi</em>.</h2>
+      </div>
+      <div class="faq__list">
+        <details class="faq__item reveal-fade">
+          <summary>In quali zone lavori?<span class="faq__ic" aria-hidden="true"></span></summary>
+          <div class="faq__a"><p>Sono basato in [la tua zona] ma faccio trasferte in tutta Italia — e all'estero per i matrimoni destination.</p></div>
+        </details>
+        <details class="faq__item reveal-fade">
+          <summary>Quanto dura il servizio per un matrimonio?<span class="faq__ic" aria-hidden="true"></span></summary>
+          <div class="faq__a"><p>Di solito dai preparativi fino al taglio della torta. Concordiamo insieme le ore in base al vostro programma.</p></div>
+        </details>
+        <details class="faq__item reveal-fade">
+          <summary>Quando ricevo le foto?<span class="faq__ic" aria-hidden="true"></span></summary>
+          <div class="faq__a"><p>Un'anteprima entro pochi giorni; la galleria completa in genere entro 4–6 settimane.</p></div>
+        </details>
+        <details class="faq__item reveal-fade">
+          <summary>Come si prenota la data?<span class="faq__ic" aria-hidden="true"></span></summary>
+          <div class="faq__a"><p>La data si blocca con la conferma e un piccolo acconto. Le date più richieste vanno via in fretta: meglio muoversi per tempo.</p></div>
+        </details>
+        <details class="faq__item reveal-fade">
+          <summary>Realizzi anche l'album?<span class="faq__ic" aria-hidden="true"></span></summary>
+          <div class="faq__a"><p>Sì: album artigianali e stampe fine art, disponibili come aggiunta al servizio.</p></div>
+        </details>
+        <details class="faq__item reveal-fade">
+          <summary>Le foto sono ad alta risoluzione?<span class="faq__ic" aria-hidden="true"></span></summary>
+          <div class="faq__a"><p>Sul sito vedete versioni ottimizzate, nitidissime e veloci. Gli originali ad alta risoluzione vengono consegnati secondo il pacchetto scelto.</p></div>
+        </details>
+      </div>
+    </section>
+
     <!-- ===== CTA / CONTATTI ===== -->
     <section class="cta" id="contatti">
       <div class="cta__media" data-parallax="0.14"><img src="images/cta.svg" alt="" /></div>
       <div class="cta__inner">
-        <p class="eyebrow reveal-line">04 — Contatti</p>
+        <p class="eyebrow reveal-line">05 — Contatti</p>
         <h2 class="cta__title">
           <span class="line"><span>Raccontiamo</span></span>
           <span class="line"><span>la <em>vostra</em> storia</span></span>
@@ -328,6 +402,6 @@
   <script defer src="js/lib/lenis.min.js"></script>
   <script defer src="js/lib/split-type.min.js"></script>
   <script defer src="js/gallery-data.js?v=3"></script>
-  <script defer src="js/main.js?v=4"></script>
+  <script defer src="js/main.js?v=5"></script>
 </body>
 </html>

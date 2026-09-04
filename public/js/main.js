@@ -34,6 +34,7 @@
     initToTop();
     initTubelight();
     initTestimonials();
+    initRotator();
 
     if (HAS_GSAP && !REDUCED) {
       document.documentElement.classList.add("gsap-ready");
@@ -67,6 +68,8 @@
       .from(".hero__cta", { y: 24, opacity: 0, duration: 0.9 }, 0.65)
       .from(".hero__scroll", { opacity: 0, duration: 0.8 }, 0.9)
       .fromTo(".hero__img", { scale: 1.25 }, { scale: 1.12, duration: 1.8, ease: "power2.out" }, 0);
+    // Ken Burns: zoom lento e continuo sull'immagine hero, dopo l'ingresso
+    gsap.to(".hero__img", { scale: 1.2, duration: 16, ease: "sine.inOut", repeat: -1, yoyo: true, delay: 2, overwrite: "auto" });
   }
 
   /* ---------- Smooth scroll (Lenis) ---------- */
@@ -573,6 +576,24 @@
         e.forEach(function (en) { if (en.isIntersecting) restart(); else if (timer) { clearInterval(timer); timer = null; } });
       }, { threshold: 0.15 }).observe(section);
     }
+  }
+
+  /* ---------- Occhiello hero: parola che ruota ---------- */
+  function initRotator() {
+    var el = $("#heroRotator"); if (!el) return;
+    var words = (el.getAttribute("data-words") || "").split("|").filter(Boolean);
+    if (words.length < 2 || REDUCED) return;
+    var i = 0;
+    el.style.display = "inline-block";
+    el.style.transition = "opacity .4s " + "cubic-bezier(0.22,1,0.36,1), transform .4s cubic-bezier(0.22,1,0.36,1)";
+    setInterval(function () {
+      i = (i + 1) % words.length;
+      el.style.opacity = "0"; el.style.transform = "translateY(-8px)";
+      setTimeout(function () {
+        el.textContent = words[i];
+        el.style.opacity = "1"; el.style.transform = "translateY(0)";
+      }, 400);
+    }, 2800);
   }
 
   /* ---------- Avvio ---------- */
