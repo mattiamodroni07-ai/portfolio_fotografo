@@ -590,27 +590,3 @@ html.gsap-ready .hero__img { will-change: transform; }
 .step p { color: var(--ink-soft); font-size: 0.92rem; }
 @media (max-width: 860px) { .process__steps { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 480px) { .process__steps { grid-template-columns: 1fr; } }
-
-/* ---------- FAQ (fisarmonica) ---------- */
-.faq { max-width: 920px; margin: 0 auto; padding: clamp(4rem, 10vh, 8rem) var(--pad); }
-.faq__head { margin-bottom: clamp(2rem, 5vh, 3.5rem); text-align: center; }
-.faq__head .eyebrow { display: inline-block; }
-.faq__list { display: flex; flex-direction: column; }
-.faq__item { border-top: 1px solid var(--line-soft); }
-.faq__item:last-child { border-bottom: 1px solid var(--line-soft); }
-.faq__item summary {
-  list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
-  padding: 1.4rem 0.2rem; font-family: var(--serif); font-size: clamp(1.05rem, 1.8vw, 1.35rem); color: var(--ink);
-  transition: color .35s var(--ease);
-}
-.faq__item summary::-webkit-details-marker { display: none; }
-.faq__item summary:hover { color: var(--gold-2); }
-.faq__ic { position: relative; flex: 0 0 auto; width: 16px; height: 16px; }
-.faq__ic::before, .faq__ic::after { content: ''; position: absolute; background: var(--gold); transition: transform .35s var(--ease), opacity .35s; }
-.faq__ic::before { top: 7px; left: 0; width: 16px; height: 1.5px; }
-.faq__ic::after { top: 0; left: 7px; width: 1.5px; height: 16px; }
-.faq__item[open] .faq__ic::after { transform: scaleY(0); opacity: 0; }
-.faq__a { padding: 0 0.2rem 1.6rem; color: var(--ink-soft); max-width: 66ch; }
-.faq__a p { font-size: 0.98rem; }
-.faq__item[open] .faq__a { animation: faqOpen .45s var(--ease); }
-@keyframes faqOpen { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
