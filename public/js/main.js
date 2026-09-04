@@ -447,7 +447,7 @@
       }
       var subject = encodeURIComponent("Richiesta info — " + name);
       var body = encodeURIComponent(msg + "\n\n— " + name + " (" + email + ")");
-      window.location.href = "mailto:info@salvatorelacalaprice.it?subject=" + subject + "&body=" + body;
+      window.location.href = "mailto:fullframe@blu.it?subject=" + subject + "&body=" + body;
       if (note) note.textContent = "Grazie! Si aprirà il tuo programma di posta per inviare il messaggio.";
       form.reset();
     });
