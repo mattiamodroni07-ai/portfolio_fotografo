@@ -133,11 +133,6 @@ body.cursor-hover .cursor__label { opacity: 1; }
   background: linear-gradient(90deg, var(--gold), var(--gold-2));
   transition: left .5s var(--ease), width .5s var(--ease); pointer-events: none;
 }
-  content: ''; position: absolute; left: 50%; transform: translateX(-50%);
-  border-radius: 50%; background: var(--gold);
-}
-.tube__bar::before { top: -8px; width: 90%; height: 18px; filter: blur(10px); opacity: 0.55; }
-.tube__bar::after  { top: -4px; width: 55%; height: 12px; filter: blur(6px);  opacity: 0.6; }
 
 .nav__toggle { display: none; width: 44px; height: 44px; position: relative; }
 .nav__toggle span {
@@ -578,3 +573,21 @@ html.gsap-ready .hero__img { will-change: transform; }
 .step p { color: var(--ink-soft); font-size: 0.92rem; }
 @media (max-width: 860px) { .process__steps { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 480px) { .process__steps { grid-template-columns: 1fr; } }
+
+
+/* ---------- Rifiniture mobile ---------- */
+@media (max-width: 900px) {
+  /* il badge non deve più sporgere fuori dal bordo sinistro */
+  .about__badge { left: 1rem; bottom: 1rem; }
+}
+@media (max-width: 600px) {
+  /* testimonianze: su telefono mostra SOLO la foto attiva, niente foto laterali che sbucano */
+  .testi__images img { opacity: 0 !important; transform: translateX(0) scale(0.96) !important; }
+  .testi__images img.is-active { opacity: 1 !important; transform: none !important; z-index: 3 !important; }
+}
+@media (max-width: 560px) {
+  /* card servizi più compatte (meno vuoto in alto) */
+  .service { min-height: auto; justify-content: flex-start; padding-top: 3.4rem; }
+  /* processo: un filo di respiro tra numero e titolo */
+  .step { padding-top: 3rem; }
+}

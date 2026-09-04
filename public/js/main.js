@@ -534,6 +534,7 @@
 
     function place(i) {
       var img = imgs[i];
+      img.classList.toggle("is-active", i === active);
       var isLeft = (active - 1 + n) % n === i;
       var isRight = (active + 1) % n === i;
       if (i === active) { img.style.transform = "translateX(0) scale(1) rotateY(0deg)"; img.style.opacity = "1"; img.style.zIndex = "3"; }
