@@ -86,21 +86,22 @@ em { font-style: italic; }
   transform-origin: left;
 }
 
-/* ---------- Custom cursor ---------- */
-.cursor { position: fixed; top: 0; left: 0; z-index: 9500; pointer-events: none; mix-blend-mode: difference; }
+/* ---------- Custom cursor (discreto, niente inversione colore) ---------- */
+.cursor { position: fixed; top: 0; left: 0; z-index: 9500; pointer-events: none; }
 .cursor__dot {
-  position: fixed; width: 6px; height: 6px; border-radius: 50%;
-  background: #fff; transform: translate(-50%, -50%);
+  position: fixed; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--gold-2); transform: translate(-50%, -50%); transition: opacity .3s;
 }
 .cursor__ring {
-  position: fixed; width: 42px; height: 42px; border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.6);
-  transform: translate(-50%, -50%) scale(1);
+  position: fixed; width: 40px; height: 40px; border-radius: 50%;
+  border: 1px solid rgba(201,162,113,0.45);
+  transform: translate(-50%, -50%);
   display: grid; place-items: center;
-  transition: width .35s var(--ease), height .35s var(--ease), background .35s var(--ease);
+  transition: width .4s var(--ease), height .4s var(--ease), border-color .4s var(--ease);
 }
-.cursor__label { font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: #000; opacity: 0; }
-body.cursor-hover .cursor__ring { width: 88px; height: 88px; background: #fff; border-color: #fff; }
+.cursor__label { font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-2); opacity: 0; }
+body.cursor-hover .cursor__ring { width: 56px; height: 56px; border-color: var(--gold-2); }
+body.cursor-hover .cursor__dot { opacity: 0; }
 body.cursor-hover .cursor__label { opacity: 1; }
 @media (hover: none) { .cursor { display: none; } }
 
