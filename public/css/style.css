@@ -548,9 +548,11 @@ html.gsap-ready .hero__img { will-change: transform; }
   .testi__images { overflow: hidden; }
 }
 @media (max-width: 560px) {
-  .stats { grid-template-columns: 1fr; }
+  /* Statistiche: restano in griglia 2×2 (non impilate) e più compatte */
+  .stat { padding: clamp(1.4rem, 5vw, 2.2rem) 0.7rem; }
+  .stat__num { font-size: clamp(2rem, 8vw, 2.8rem); }
+  .stat p { margin-top: 0.4rem; font-size: 0.64rem; letter-spacing: 0.1em; }
   .services__grid { grid-template-columns: 1fr; }
-  .stat { border-right: none; border-bottom: 1px solid var(--line-soft); }
   .hero__scroll { display: none; }
   .footer__bottom { flex-direction: column; align-items: flex-start; }
 }
