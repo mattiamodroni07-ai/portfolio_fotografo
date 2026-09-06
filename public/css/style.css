@@ -381,7 +381,7 @@ html.gsap-ready .gcat__media img { animation: kenburns 20s ease-in-out infinite 
   transition: color .3s, border-color .3s, background .3s; white-space: nowrap;
 }
 .archive__back:hover, .archive__close:hover { color: #120d0a; background: var(--gold); border-color: var(--gold); }
-.archive__body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: clamp(1.5rem, 4vw, 3rem) var(--pad); }
+.archive__body { flex: 1; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; padding: clamp(1.5rem, 4vw, 3rem) var(--pad); }
 .archive__empty { color: var(--ink-soft); text-align: center; padding: 3rem 0; }
 
 /* lista eventi */

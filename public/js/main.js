@@ -316,8 +316,8 @@
 
     if (!arch) return; // senza overlay, le card restano decorative
 
-    function openArchive() { arch.classList.add("is-open"); arch.setAttribute("aria-hidden", "false"); }
-    function closeArchive() { arch.classList.remove("is-open"); arch.setAttribute("aria-hidden", "true"); level = 0; }
+    function openArchive() { arch.classList.add("is-open"); arch.setAttribute("aria-hidden", "false"); if (lenis) lenis.stop(); }
+    function closeArchive() { arch.classList.remove("is-open"); arch.setAttribute("aria-hidden", "true"); level = 0; if (lenis) lenis.start(); }
 
     // ---- Livello 2: lista eventi ----
     function openCategory(ci) {
@@ -376,6 +376,14 @@
 
     if (back) back.addEventListener("click", goBack);
     if (close) close.addEventListener("click", closeArchive);
+    // La rotellina dentro l'archivio scorre SOLO l'archivio, mai la pagina dietro
+    if (body) {
+      arch.addEventListener("wheel", function (e) {
+        e.preventDefault();
+        var mult = e.deltaMode === 1 ? 16 : (e.deltaMode === 2 ? body.clientHeight : 1);
+        body.scrollTop += e.deltaY * mult;
+      }, { passive: false });
+    }
     document.addEventListener("keydown", function (e) {
       if (e.key !== "Escape" || !arch.classList.contains("is-open")) return;
       var lb = $("#lightbox");
