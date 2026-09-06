@@ -94,6 +94,7 @@ function write(rel, content) {
 
 // Immagini principali
 write("hero.svg", svg({ w: 1920, h: 1080, index: 1, label: "SALVATORE LACALAPRICE", sub: "SOSTITUISCI CON LA TUA FOTO HERO", seed: 7 }));
+write("hero-mobile.svg", svg({ w: 1080, h: 1440, index: 1, label: "SALVATORE LACALAPRICE", sub: "SOSTITUISCI CON LA TUA FOTO HERO", seed: 7 })); // versione verticale per telefono
 write("about.svg", svg({ w: 900, h: 1120, index: 4, label: "IL FOTOGRAFO", sub: "SOSTITUISCI CON UN TUO RITRATTO", seed: 13 }));
 write("cta.svg", svg({ w: 1920, h: 1000, index: 2, label: "LAVORIAMO INSIEME", sub: "SOSTITUISCI CON UNA TUA FOTO", seed: 21 }));
 
