@@ -81,6 +81,23 @@
       ],
       "video": [],
       "featured": false
+    },
+    {
+      "nome": "18 PEPPE",
+      "categoria": "compleanni",
+      "luogo": "parco dei manieri",
+      "data": "2026-09-17",
+      "cover": "https://www.amazon.it/Buon-Compleanno-18-Anni-Congratulazioni/dp/B0991J7DCM",
+      "foto": [
+        "https://www.704ristorante.it/festeggiare-il-18-compleanno/",
+        "https://magicfly.it/festa-18-anni-roma-idee/",
+        "https://www.festa18anni-roma.it/come-festeggiare-i-18-anni-ecco-10-idee-per-celebrare-leta-adulta/",
+        "/uploads/Screenshot (1).png"
+      ],
+      "video": [
+        "https://youtu.be/CZKDRqCz7zk?si=Iccs3KM15McfHI7e"
+      ],
+      "featured": false
     }
   ]
 }
