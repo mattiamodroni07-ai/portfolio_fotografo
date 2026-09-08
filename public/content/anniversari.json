@@ -1,0 +1,16 @@
+{
+  "eventi": [
+    {
+      "nome": "50° di Anna & Piero",
+      "luogo": "Ristorante Il Glicine",
+      "data": "2024-04-01",
+      "cover": "images/gallery/10.svg",
+      "foto": [
+        "images/gallery/10.svg",
+        "images/gallery/11.svg"
+      ],
+      "video": [],
+      "featured": false
+    }
+  ]
+}

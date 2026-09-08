@@ -1,0 +1,17 @@
+{
+  "eventi": [
+    {
+      "nome": "Gala aziendale",
+      "luogo": "Palazzo dei Congressi",
+      "data": "2023-11-01",
+      "cover": "images/gallery/03.svg",
+      "foto": [
+        "images/gallery/03.svg",
+        "images/gallery/04.svg",
+        "images/gallery/05.svg"
+      ],
+      "video": [],
+      "featured": false
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "eventi": [
+    {
+      "nome": "18 PEPPE",
+      "luogo": "parco dei manieri",
+      "data": "2026-09-17",
+      "cover": "",
+      "foto": [
+        "/uploads/Screenshot (1).png"
+      ],
+      "video": [
+        "https://youtu.be/CZKDRqCz7zk?si=Iccs3KM15McfHI7e"
+      ],
+      "featured": false
+    },
+    {
+      "nome": "18° di Martina",
+      "luogo": "Villa dei Cedri",
+      "data": "2024-07-01",
+      "cover": "images/gallery/12.svg",
+      "foto": [
+        "images/gallery/12.svg",
+        "images/gallery/01.svg"
+      ],
+      "video": [],
+      "featured": false
+    }
+  ]
+}

@@ -1,14 +1,18 @@
 # =========================================================
 #  Full Frame — configurazione del pannello (Sveltia CMS)
-#  Qui si decide COSA si puo' gestire dal pannello /admin.
+#  Gli eventi sono divisi in SEZIONI per categoria (vedi "collections").
 # =========================================================
 
 backend:
   name: github
   repo: mattiamodroni07-ai/portfolio_fotografo
   branch: claude/install-ui-ux-pro-max-ln16ke
-  # Indirizzo del "portiere" del login (Worker sveltia-cms-auth su Cloudflare).
   base_url: https://sveltia-cms-auth.mattiamodroni07.workers.dev
+
+# Logo (bianco) e link mostrati nel pannello
+logo_url: /assets/logo-fullframe.png
+site_url: https://portfoliofotografo.mattiamodroni07.workers.dev
+display_url: https://portfoliofotografo.mattiamodroni07.workers.dev
 
 # Dove finiscono le foto caricate dal pannello
 media_folder: "public/uploads"
@@ -17,7 +21,7 @@ public_folder: "/uploads"
 # Interfaccia in italiano
 locale: "it"
 
-# Messaggi di commit in italiano (cosa si legge nella cronologia)
+# Messaggi salvati nella cronologia (in italiano)
 backend_commit_messages:
   create: "Aggiunto {{collection}} dal pannello"
   update: "Modificato {{collection}} dal pannello"
@@ -28,39 +32,131 @@ backend_commit_messages:
 collections:
   - name: "portfolio"
     label: "Portfolio"
+    description: "Scegli una categoria e gestisci i suoi eventi."
+    editor:
+      preview: false
     files:
-      - name: "eventi"
-        label: "Eventi della galleria"
-        file: "public/content/eventi.json"
+      - name: "matrimoni"
+        label: "Matrimoni"
+        file: "public/content/matrimoni.json"
         format: "json"
-        description: "Aggiungi, modifica o elimina gli eventi che appaiono nel portfolio del sito."
         fields:
           - name: "eventi"
-            label: "Eventi"
+            label: "Eventi — Matrimoni"
             label_singular: "Evento"
             widget: "list"
-            summary: "{{fields.nome}}  ·  {{fields.categoria}}"
+            collapsed: true
+            summary: "{{fields.nome}}"
             fields:
-              - { name: "nome", label: "Nome evento", widget: "string", hint: "Es. Giulia & Marco" }
-              - name: "categoria"
-                label: "Categoria"
-                widget: "select"
-                options:
-                  - { label: "Matrimoni", value: "matrimoni" }
-                  - { label: "Prime Comunioni", value: "comunioni" }
-                  - { label: "Anniversari", value: "anniversari" }
-                  - { label: "Compleanni", value: "compleanni" }
-                  - { label: "Eventi Aziendali", value: "aziendali" }
-              - { name: "luogo", label: "Luogo", widget: "string", required: false, hint: "Es. Villa Reale, Como" }
+              - { name: "nome", label: "Nome dell'evento", widget: "string", hint: "Es. Giulia & Marco" }
               - { name: "data", label: "Data", widget: "datetime", format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false, required: false }
-              - { name: "cover", label: "Foto di copertina", widget: "image", required: false, hint: "La foto che rappresenta l'evento nella lista. Se vuota, viene usata la prima foto." }
-              - name: "foto"
-                label: "Foto"
-                widget: "list"
-                field: { name: "immagine", label: "Immagine", widget: "image" }
+              - { name: "luogo", label: "Luogo", widget: "string", required: false, hint: "Es. Villa Reale, Como" }
+              - { name: "cover", label: "Foto di copertina", widget: "image", required: false, hint: "Facoltativa. Se la lasci vuota, viene usata la prima foto." }
+              - { name: "foto", label: "Foto dell'evento", widget: "image", multiple: true, required: false, hint: "Carica o trascina le foto dal dispositivo. NON incollare indirizzi di pagine web." }
               - name: "video"
                 label: "Video (link)"
                 widget: "list"
                 required: false
-                field: { name: "url", label: "Link (YouTube / Instagram / ...)", widget: "string" }
+                hint: "Per i VIDEO va bene il link: incolla l'indirizzo di YouTube o Vimeo."
+                field: { name: "url", label: "Link video", widget: "string" }
+              - { name: "featured", label: "In evidenza in home", widget: "boolean", default: false, required: false }
+
+      - name: "comunioni"
+        label: "Prime Comunioni"
+        file: "public/content/comunioni.json"
+        format: "json"
+        fields:
+          - name: "eventi"
+            label: "Eventi — Prime Comunioni"
+            label_singular: "Evento"
+            widget: "list"
+            collapsed: true
+            summary: "{{fields.nome}}"
+            fields:
+              - { name: "nome", label: "Nome dell'evento", widget: "string", hint: "Es. Comunione di Sofia" }
+              - { name: "data", label: "Data", widget: "datetime", format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false, required: false }
+              - { name: "luogo", label: "Luogo", widget: "string", required: false, hint: "Es. Parrocchia San Giovanni" }
+              - { name: "cover", label: "Foto di copertina", widget: "image", required: false, hint: "Facoltativa. Se la lasci vuota, viene usata la prima foto." }
+              - { name: "foto", label: "Foto dell'evento", widget: "image", multiple: true, required: false, hint: "Carica o trascina le foto dal dispositivo. NON incollare indirizzi di pagine web." }
+              - name: "video"
+                label: "Video (link)"
+                widget: "list"
+                required: false
+                hint: "Per i VIDEO va bene il link: incolla l'indirizzo di YouTube o Vimeo."
+                field: { name: "url", label: "Link video", widget: "string" }
+              - { name: "featured", label: "In evidenza in home", widget: "boolean", default: false, required: false }
+
+      - name: "anniversari"
+        label: "Anniversari"
+        file: "public/content/anniversari.json"
+        format: "json"
+        fields:
+          - name: "eventi"
+            label: "Eventi — Anniversari"
+            label_singular: "Evento"
+            widget: "list"
+            collapsed: true
+            summary: "{{fields.nome}}"
+            fields:
+              - { name: "nome", label: "Nome dell'evento", widget: "string", hint: "Es. 50° di Anna & Piero" }
+              - { name: "data", label: "Data", widget: "datetime", format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false, required: false }
+              - { name: "luogo", label: "Luogo", widget: "string", required: false, hint: "Es. Ristorante Il Glicine" }
+              - { name: "cover", label: "Foto di copertina", widget: "image", required: false, hint: "Facoltativa. Se la lasci vuota, viene usata la prima foto." }
+              - { name: "foto", label: "Foto dell'evento", widget: "image", multiple: true, required: false, hint: "Carica o trascina le foto dal dispositivo. NON incollare indirizzi di pagine web." }
+              - name: "video"
+                label: "Video (link)"
+                widget: "list"
+                required: false
+                hint: "Per i VIDEO va bene il link: incolla l'indirizzo di YouTube o Vimeo."
+                field: { name: "url", label: "Link video", widget: "string" }
+              - { name: "featured", label: "In evidenza in home", widget: "boolean", default: false, required: false }
+
+      - name: "compleanni"
+        label: "Compleanni"
+        file: "public/content/compleanni.json"
+        format: "json"
+        fields:
+          - name: "eventi"
+            label: "Eventi — Compleanni"
+            label_singular: "Evento"
+            widget: "list"
+            collapsed: true
+            summary: "{{fields.nome}}"
+            fields:
+              - { name: "nome", label: "Nome dell'evento", widget: "string", hint: "Es. 18° di Martina" }
+              - { name: "data", label: "Data", widget: "datetime", format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false, required: false }
+              - { name: "luogo", label: "Luogo", widget: "string", required: false, hint: "Es. Villa dei Cedri" }
+              - { name: "cover", label: "Foto di copertina", widget: "image", required: false, hint: "Facoltativa. Se la lasci vuota, viene usata la prima foto." }
+              - { name: "foto", label: "Foto dell'evento", widget: "image", multiple: true, required: false, hint: "Carica o trascina le foto dal dispositivo. NON incollare indirizzi di pagine web." }
+              - name: "video"
+                label: "Video (link)"
+                widget: "list"
+                required: false
+                hint: "Per i VIDEO va bene il link: incolla l'indirizzo di YouTube o Vimeo."
+                field: { name: "url", label: "Link video", widget: "string" }
+              - { name: "featured", label: "In evidenza in home", widget: "boolean", default: false, required: false }
+
+      - name: "aziendali"
+        label: "Eventi Aziendali"
+        file: "public/content/aziendali.json"
+        format: "json"
+        fields:
+          - name: "eventi"
+            label: "Eventi — Aziendali"
+            label_singular: "Evento"
+            widget: "list"
+            collapsed: true
+            summary: "{{fields.nome}}"
+            fields:
+              - { name: "nome", label: "Nome dell'evento", widget: "string", hint: "Es. Gala aziendale" }
+              - { name: "data", label: "Data", widget: "datetime", format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false, required: false }
+              - { name: "luogo", label: "Luogo", widget: "string", required: false, hint: "Es. Palazzo dei Congressi" }
+              - { name: "cover", label: "Foto di copertina", widget: "image", required: false, hint: "Facoltativa. Se la lasci vuota, viene usata la prima foto." }
+              - { name: "foto", label: "Foto dell'evento", widget: "image", multiple: true, required: false, hint: "Carica o trascina le foto dal dispositivo. NON incollare indirizzi di pagine web." }
+              - name: "video"
+                label: "Video (link)"
+                widget: "list"
+                required: false
+                hint: "Per i VIDEO va bene il link: incolla l'indirizzo di YouTube o Vimeo."
+                field: { name: "url", label: "Link video", widget: "string" }
               - { name: "featured", label: "In evidenza in home", widget: "boolean", default: false, required: false }

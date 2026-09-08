@@ -1,0 +1,31 @@
+{
+  "eventi": [
+    {
+      "nome": "Giulia & Marco",
+      "luogo": "Villa Reale",
+      "data": "2024-06-01",
+      "cover": "images/gallery/01.svg",
+      "foto": [
+        "images/gallery/01.svg",
+        "images/gallery/02.svg",
+        "images/gallery/03.svg",
+        "images/gallery/04.svg"
+      ],
+      "video": [],
+      "featured": true
+    },
+    {
+      "nome": "Sara & Luca",
+      "luogo": "Lago di Como",
+      "data": "2023-09-01",
+      "cover": "images/gallery/05.svg",
+      "foto": [
+        "images/gallery/05.svg",
+        "images/gallery/06.svg",
+        "images/gallery/07.svg"
+      ],
+      "video": [],
+      "featured": false
+    }
+  ]
+}

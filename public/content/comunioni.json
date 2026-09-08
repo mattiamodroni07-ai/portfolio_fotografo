@@ -1,0 +1,16 @@
+{
+  "eventi": [
+    {
+      "nome": "Comunione di Sofia",
+      "luogo": "Parrocchia San Giovanni",
+      "data": "2024-05-01",
+      "cover": "images/gallery/08.svg",
+      "foto": [
+        "images/gallery/08.svg",
+        "images/gallery/09.svg"
+      ],
+      "video": [],
+      "featured": false
+    }
+  ]
+}

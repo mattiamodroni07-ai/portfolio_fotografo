@@ -280,14 +280,14 @@
   }
 
   /* ---------- Gallery: categorie → eventi → foto ---------- */
-  // Categorie fisse (ordine + nome mostrato). Gli EVENTI arrivano dal CMS
-  // (public/content/eventi.json); qui vengono raggruppati per categoria.
+  // Categorie fisse (ordine + nome mostrato + file dati). Ogni categoria ha il suo
+  // file gestito dal CMS: public/content/<slug>.json  ->  { "eventi": [ ... ] }.
   var GAL_CATS = [
-    { slug: "matrimoni",   label: "Matrimoni" },
-    { slug: "comunioni",   label: "Prime Comunioni" },
-    { slug: "anniversari", label: "Anniversari" },
-    { slug: "compleanni",  label: "Compleanni" },
-    { slug: "aziendali",   label: "Eventi Aziendali" }
+    { slug: "matrimoni",   label: "Matrimoni",        file: "content/matrimoni.json" },
+    { slug: "comunioni",   label: "Prime Comunioni",  file: "content/comunioni.json" },
+    { slug: "anniversari", label: "Anniversari",      file: "content/anniversari.json" },
+    { slug: "compleanni",  label: "Compleanni",       file: "content/compleanni.json" },
+    { slug: "aziendali",   label: "Eventi Aziendali", file: "content/aziendali.json" }
   ];
   var GAL_MESI = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
     "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
@@ -315,37 +315,37 @@
     return u ? { kind: "link", href: u } : null;
   }
 
-  // Lista piatta di eventi (dal CMS) -> struttura CATEGORIA > EVENTI > FOTO
-  function galGroup(list) {
-    var out = [];
-    GAL_CATS.forEach(function (cat) {
-      var evs = list.filter(function (e) { return e && e.categoria === cat.slug; });
-      evs.sort(function (a, b) {
-        var da = a.data ? new Date(a.data).getTime() : 0;
-        var db = b.data ? new Date(b.data).getTime() : 0;
-        return db - da; // piu' recenti prima
-      });
-      if (!evs.length) return; // categoria senza eventi: non mostrata
-      var eventi = evs.map(function (e) {
-        var foto = (e.foto || []).filter(Boolean);
-        return { nome: e.nome || "", info: galInfo(e.luogo, e.data), foto: foto, cover: e.cover || foto[0] || "", video: (e.video || []).filter(Boolean) };
-      });
-      out.push({ nome: cat.label, cover: eventi[0].cover || "", eventi: eventi });
+  // Una categoria + i suoi eventi grezzi -> blocco pronto per la galleria (o null se vuota)
+  function galCat(cat, rawEventi) {
+    var evs = (rawEventi || []).slice();
+    evs.sort(function (a, b) {
+      var da = a && a.data ? new Date(a.data).getTime() : 0;
+      var db = b && b.data ? new Date(b.data).getTime() : 0;
+      return db - da; // piu' recenti prima
     });
-    return out;
+    var eventi = evs.map(function (e) {
+      var foto = (e.foto || []).filter(Boolean);
+      return { nome: e.nome || "", info: galInfo(e.luogo, e.data), foto: foto, cover: e.cover || foto[0] || "", video: (e.video || []).filter(Boolean) };
+    });
+    if (!eventi.length) return null; // categoria senza eventi: non mostrata
+    return { nome: cat.label, cover: eventi[0].cover || "", eventi: eventi };
   }
 
   function initGallery() {
     var host = $("#galleryCats");
     if (!host) return;
-    // Dati dal CMS; se il file manca o e' offline, ripiega su window.GALLERY (gallery-data.js)
-    fetch("content/eventi.json", { cache: "no-cache" })
-      .then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (j) {
-        var list = j && j.eventi ? j.eventi : null;
-        buildGallery(host, (list && list.length) ? galGroup(list) : (window.GALLERY || []));
-      })
-      .catch(function () { buildGallery(host, window.GALLERY || []); });
+    // Ogni categoria ha il suo file (gestito dal CMS): li carico tutti in parallelo.
+    var jobs = GAL_CATS.map(function (cat) {
+      return fetch(cat.file, { cache: "no-cache" })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (j) { return galCat(cat, j && j.eventi); })
+        .catch(function () { return null; });
+    });
+    Promise.all(jobs).then(function (blocks) {
+      var data = blocks.filter(Boolean);
+      // se non si carica nulla dai file, ripiega su gallery-data.js
+      buildGallery(host, data.length ? data : (window.GALLERY || []));
+    });
   }
 
   function buildGallery(host, data) {
