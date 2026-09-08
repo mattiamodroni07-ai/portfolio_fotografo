@@ -300,6 +300,21 @@
     return parts.join(" — ");
   }
 
+  // Riconosce un link video e lo trasforma in indirizzo "incorporabile"
+  function galVideo(url) {
+    var u = String(url == null ? "" : url).trim();
+    var m;
+    if ((m = u.match(/youtu\.be\/([\w-]{6,})/)) ||
+        (m = u.match(/[?&]v=([\w-]{6,})/)) ||
+        (m = u.match(/youtube\.com\/(?:embed|shorts|live)\/([\w-]{6,})/))) {
+      return { kind: "iframe", src: "https://www.youtube-nocookie.com/embed/" + m[1] };
+    }
+    if ((m = u.match(/vimeo\.com\/(?:video\/)?(\d+)/))) {
+      return { kind: "iframe", src: "https://player.vimeo.com/video/" + m[1] };
+    }
+    return u ? { kind: "link", href: u } : null;
+  }
+
   // Lista piatta di eventi (dal CMS) -> struttura CATEGORIA > EVENTI > FOTO
   function galGroup(list) {
     var out = [];
@@ -313,7 +328,7 @@
       if (!evs.length) return; // categoria senza eventi: non mostrata
       var eventi = evs.map(function (e) {
         var foto = (e.foto || []).filter(Boolean);
-        return { nome: e.nome || "", info: galInfo(e.luogo, e.data), foto: foto, cover: e.cover || foto[0] || "" };
+        return { nome: e.nome || "", info: galInfo(e.luogo, e.data), foto: foto, cover: e.cover || foto[0] || "", video: (e.video || []).filter(Boolean) };
       });
       out.push({ nome: cat.label, cover: eventi[0].cover || "", eventi: eventi });
     });
@@ -409,6 +424,29 @@
       body.className = "archive__body archive__body--photos";
       body.innerHTML = "";
       body.scrollTop = 0;
+      // Video dell'evento (in cima, a tutta larghezza)
+      var videos = ev.video || [];
+      if (videos.length) {
+        var vwrap = document.createElement("div");
+        vwrap.className = "gvideos";
+        videos.forEach(function (vurl) {
+          var vi = galVideo(vurl);
+          if (!vi) return;
+          if (vi.kind === "iframe") {
+            var box = document.createElement("div");
+            box.className = "gvideo";
+            box.innerHTML = '<iframe src="' + esc(vi.src) + '" title="' + esc(ev.nome) + ' — video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+            vwrap.appendChild(box);
+          } else {
+            var a = document.createElement("a");
+            a.className = "gvideo gvideo--link";
+            a.href = vi.href; a.target = "_blank"; a.rel = "noopener";
+            a.textContent = "▶ Guarda il video";
+            vwrap.appendChild(a);
+          }
+        });
+        if (vwrap.childNodes.length) body.appendChild(vwrap);
+      }
       var foto = ev.foto || [];
       var caps = foto.map(function () { return ev.nome; });
       foto.forEach(function (src, pi) {
