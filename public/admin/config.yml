@@ -1,0 +1,68 @@
+# =========================================================
+#  Full Frame — configurazione del pannello (Sveltia CMS)
+#  Qui si decide COSA si puo' gestire dal pannello /admin.
+# =========================================================
+
+backend:
+  name: github
+  repo: mattiamodroni07-ai/portfolio_fotografo
+  branch: claude/install-ui-ux-pro-max-ln16ke
+  # ⚠️ DA COMPLETARE: indirizzo del "portiere" del login (Worker su Cloudflare).
+  #    Dopo aver pubblicato il worker sveltia-cms-auth, incolla qui il suo URL.
+  #    Esempio: https://fullframe-auth.tuonome.workers.dev
+  base_url: https://REPLACE-CON-URL-DEL-WORKER.workers.dev
+
+# Dove finiscono le foto caricate dal pannello
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+# Interfaccia in italiano
+locale: "it"
+
+# Messaggi di commit in italiano (cosa si legge nella cronologia)
+backend_commit_messages:
+  create: "Aggiunto {{collection}} dal pannello"
+  update: "Modificato {{collection}} dal pannello"
+  delete: "Rimosso {{collection}} dal pannello"
+  uploadMedia: "Caricata foto {{path}}"
+  deleteMedia: "Rimossa foto {{path}}"
+
+collections:
+  - name: "portfolio"
+    label: "Portfolio"
+    files:
+      - name: "eventi"
+        label: "Eventi della galleria"
+        file: "public/content/eventi.json"
+        format: "json"
+        description: "Aggiungi, modifica o elimina gli eventi che appaiono nel portfolio del sito."
+        fields:
+          - name: "eventi"
+            label: "Eventi"
+            label_singular: "Evento"
+            widget: "list"
+            summary: "{{fields.nome}}  ·  {{fields.categoria}}"
+            fields:
+              - { name: "nome", label: "Nome evento", widget: "string", hint: "Es. Giulia & Marco" }
+              - name: "categoria"
+                label: "Categoria"
+                widget: "select"
+                options:
+                  - { label: "Matrimoni", value: "matrimoni" }
+                  - { label: "Prime Comunioni", value: "comunioni" }
+                  - { label: "Anniversari", value: "anniversari" }
+                  - { label: "Compleanni", value: "compleanni" }
+                  - { label: "Eventi Aziendali", value: "aziendali" }
+              - { name: "luogo", label: "Luogo", widget: "string", required: false, hint: "Es. Villa Reale, Como" }
+              - { name: "data", label: "Data", widget: "datetime", format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false, required: false }
+              - { name: "cover", label: "Foto di copertina", widget: "image", required: false, hint: "La foto che rappresenta l'evento nella lista. Se vuota, viene usata la prima foto." }
+              - name: "foto"
+                label: "Foto"
+                widget: "list"
+                field: { name: "immagine", label: "Immagine", widget: "image" }
+              - name: "video"
+                label: "Video (link)"
+                widget: "list"
+                required: false
+                field: { name: "url", label: "Link (YouTube / Instagram / ...)", widget: "string" }
+              - { name: "featured", label: "In evidenza in home", widget: "boolean", default: false, required: false }

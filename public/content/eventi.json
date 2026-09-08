@@ -1,0 +1,86 @@
+{
+  "eventi": [
+    {
+      "nome": "Giulia & Marco",
+      "categoria": "matrimoni",
+      "luogo": "Villa Reale",
+      "data": "2024-06-01",
+      "cover": "images/gallery/01.svg",
+      "foto": [
+        "images/gallery/01.svg",
+        "images/gallery/02.svg",
+        "images/gallery/03.svg",
+        "images/gallery/04.svg"
+      ],
+      "video": [],
+      "featured": true
+    },
+    {
+      "nome": "Sara & Luca",
+      "categoria": "matrimoni",
+      "luogo": "Lago di Como",
+      "data": "2023-09-01",
+      "cover": "images/gallery/05.svg",
+      "foto": [
+        "images/gallery/05.svg",
+        "images/gallery/06.svg",
+        "images/gallery/07.svg"
+      ],
+      "video": [],
+      "featured": false
+    },
+    {
+      "nome": "Comunione di Sofia",
+      "categoria": "comunioni",
+      "luogo": "Parrocchia San Giovanni",
+      "data": "2024-05-01",
+      "cover": "images/gallery/08.svg",
+      "foto": [
+        "images/gallery/08.svg",
+        "images/gallery/09.svg"
+      ],
+      "video": [],
+      "featured": false
+    },
+    {
+      "nome": "50° di Anna & Piero",
+      "categoria": "anniversari",
+      "luogo": "Ristorante Il Glicine",
+      "data": "2024-04-01",
+      "cover": "images/gallery/10.svg",
+      "foto": [
+        "images/gallery/10.svg",
+        "images/gallery/11.svg"
+      ],
+      "video": [],
+      "featured": false
+    },
+    {
+      "nome": "18° di Martina",
+      "categoria": "compleanni",
+      "luogo": "Villa dei Cedri",
+      "data": "2024-07-01",
+      "cover": "images/gallery/12.svg",
+      "foto": [
+        "images/gallery/12.svg",
+        "images/gallery/01.svg"
+      ],
+      "video": [],
+      "featured": false
+    },
+    {
+      "nome": "Gala aziendale",
+      "categoria": "aziendali",
+      "luogo": "Palazzo dei Congressi",
+      "data": "2023-11-01",
+      "cover": "images/gallery/03.svg",
+      "foto": [
+        "images/gallery/03.svg",
+        "images/gallery/04.svg",
+        "images/gallery/05.svg"
+      ],
+      "video": [],
+      "featured": false
+    }
+  ]
+}

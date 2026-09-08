@@ -280,10 +280,61 @@
   }
 
   /* ---------- Gallery: categorie → eventi → foto ---------- */
+  // Categorie fisse (ordine + nome mostrato). Gli EVENTI arrivano dal CMS
+  // (public/content/eventi.json); qui vengono raggruppati per categoria.
+  var GAL_CATS = [
+    { slug: "matrimoni",   label: "Matrimoni" },
+    { slug: "comunioni",   label: "Prime Comunioni" },
+    { slug: "anniversari", label: "Anniversari" },
+    { slug: "compleanni",  label: "Compleanni" },
+    { slug: "aziendali",   label: "Eventi Aziendali" }
+  ];
+  var GAL_MESI = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
+    "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
+
+  // "Villa Reale — Giugno 2024" da luogo + data
+  function galInfo(luogo, data) {
+    var parts = [];
+    if (luogo) parts.push(luogo);
+    if (data) { var d = new Date(data); if (!isNaN(d.getTime())) parts.push(GAL_MESI[d.getMonth()] + " " + d.getFullYear()); }
+    return parts.join(" — ");
+  }
+
+  // Lista piatta di eventi (dal CMS) -> struttura CATEGORIA > EVENTI > FOTO
+  function galGroup(list) {
+    var out = [];
+    GAL_CATS.forEach(function (cat) {
+      var evs = list.filter(function (e) { return e && e.categoria === cat.slug; });
+      evs.sort(function (a, b) {
+        var da = a.data ? new Date(a.data).getTime() : 0;
+        var db = b.data ? new Date(b.data).getTime() : 0;
+        return db - da; // piu' recenti prima
+      });
+      if (!evs.length) return; // categoria senza eventi: non mostrata
+      var eventi = evs.map(function (e) {
+        var foto = (e.foto || []).filter(Boolean);
+        return { nome: e.nome || "", info: galInfo(e.luogo, e.data), foto: foto, cover: e.cover || foto[0] || "" };
+      });
+      out.push({ nome: cat.label, cover: eventi[0].cover || "", eventi: eventi });
+    });
+    return out;
+  }
+
   function initGallery() {
     var host = $("#galleryCats");
-    var data = window.GALLERY;
-    if (!host || !data || !data.length) return;
+    if (!host) return;
+    // Dati dal CMS; se il file manca o e' offline, ripiega su window.GALLERY (gallery-data.js)
+    fetch("content/eventi.json", { cache: "no-cache" })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) {
+        var list = j && j.eventi ? j.eventi : null;
+        buildGallery(host, (list && list.length) ? galGroup(list) : (window.GALLERY || []));
+      })
+      .catch(function () { buildGallery(host, window.GALLERY || []); });
+  }
+
+  function buildGallery(host, data) {
+    if (!data || !data.length) return;
 
     var arch = $("#archive"), body = $("#archiveBody"), title = $("#archiveTitle"),
         back = $("#archiveBack"), close = $("#archiveClose");
@@ -332,7 +383,7 @@
         body.innerHTML = '<p class="archive__empty">Nessun evento ancora pubblicato in questa categoria.</p>';
       } else {
         eventi.forEach(function (ev, ei) {
-          var cover = (ev.foto && ev.foto[0]) || cat.cover;
+          var cover = ev.cover || (ev.foto && ev.foto[0]) || cat.cover;
           var nf = (ev.foto || []).length;
           var c = document.createElement("button");
           c.className = "gevent"; c.type = "button";
