@@ -7,10 +7,8 @@ backend:
   name: github
   repo: mattiamodroni07-ai/portfolio_fotografo
   branch: claude/install-ui-ux-pro-max-ln16ke
-  # ⚠️ DA COMPLETARE: indirizzo del "portiere" del login (Worker su Cloudflare).
-  #    Dopo aver pubblicato il worker sveltia-cms-auth, incolla qui il suo URL.
-  #    Esempio: https://fullframe-auth.tuonome.workers.dev
-  base_url: https://REPLACE-CON-URL-DEL-WORKER.workers.dev
+  # Indirizzo del "portiere" del login (Worker sveltia-cms-auth su Cloudflare).
+  base_url: https://sveltia-cms-auth.mattiamodroni07.workers.dev
 
 # Dove finiscono le foto caricate dal pannello
 media_folder: "public/uploads"
