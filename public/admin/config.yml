@@ -160,3 +160,21 @@ collections:
                 hint: "Per i VIDEO va bene il link: incolla l'indirizzo di YouTube o Vimeo."
                 field: { name: "url", label: "Link video", widget: "string" }
               - { name: "featured", label: "In evidenza in home", widget: "boolean", default: false, required: false }
+
+  - name: "estetiche"
+    label: "Foto estetiche (striscia)"
+    description: "Le foto che scorrono nella striscia in movimento della home."
+    editor:
+      preview: false
+    files:
+      - name: "estetiche"
+        label: "Foto della striscia"
+        file: "public/content/estetiche.json"
+        format: "json"
+        fields:
+          - name: "foto"
+            label: "Foto della striscia"
+            widget: "image"
+            multiple: true
+            required: false
+            hint: "Carica o trascina le foto che scorreranno nella home. Meglio orizzontali."

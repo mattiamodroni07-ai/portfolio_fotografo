@@ -30,6 +30,7 @@
     initCounters();
     initLightbox();
     initGallery();
+    initAesthetic();
     initForm();
     initToTop();
     initTubelight();
@@ -420,15 +421,25 @@
     function openEvent(ci, ei) {
       level = 2;
       var ev = data[ci].eventi[ei];
-      title.textContent = ev.nome + (ev.info ? " — " + ev.info : "");
-      body.className = "archive__body archive__body--photos";
+      title.textContent = ev.nome; // nella barra in alto solo il nome
+      body.className = "archive__body archive__body--event";
       body.innerHTML = "";
       body.scrollTop = 0;
-      // Video dell'evento (in cima, a tutta larghezza)
+
+      // Intestazione: luogo · data (staccata dal resto)
+      if (ev.info) {
+        var head = document.createElement("div");
+        head.className = "gevent-head";
+        head.innerHTML = '<p class="gevent-head__meta">' + esc(ev.info) + '</p>';
+        body.appendChild(head);
+      }
+
+      // Sezione VIDEO (con titolo)
       var videos = ev.video || [];
       if (videos.length) {
-        var vwrap = document.createElement("div");
-        vwrap.className = "gvideos";
+        var vsec = document.createElement("section"); vsec.className = "gsec";
+        var vtitle = document.createElement("h4"); vtitle.className = "gsec__title"; vtitle.textContent = "Video";
+        var vwrap = document.createElement("div"); vwrap.className = "gvideos";
         videos.forEach(function (vurl) {
           var vi = galVideo(vurl);
           if (!vi) return;
@@ -445,17 +456,25 @@
             vwrap.appendChild(a);
           }
         });
-        if (vwrap.childNodes.length) body.appendChild(vwrap);
+        if (vwrap.childNodes.length) { vsec.appendChild(vtitle); vsec.appendChild(vwrap); body.appendChild(vsec); }
       }
+
+      // Sezione FOTO (con titolo)
       var foto = ev.foto || [];
-      var caps = foto.map(function () { return ev.nome; });
-      foto.forEach(function (src, pi) {
-        var b = document.createElement("button");
-        b.className = "gphoto"; b.type = "button";
-        b.innerHTML = '<img src="' + esc(src) + '" alt="' + esc(ev.nome) + ' — foto ' + (pi + 1) + '" loading="lazy" />';
-        b.addEventListener("click", function () { openLightbox(foto, caps, pi); });
-        body.appendChild(b);
-      });
+      if (foto.length) {
+        var psec = document.createElement("section"); psec.className = "gsec";
+        var ptitle = document.createElement("h4"); ptitle.className = "gsec__title"; ptitle.textContent = "Foto";
+        var grid = document.createElement("div"); grid.className = "gphotos";
+        var caps = foto.map(function () { return ev.nome; });
+        foto.forEach(function (src, pi) {
+          var b = document.createElement("button");
+          b.className = "gphoto"; b.type = "button";
+          b.innerHTML = '<img src="' + esc(src) + '" alt="' + esc(ev.nome) + ' — foto ' + (pi + 1) + '" loading="lazy" />';
+          b.addEventListener("click", function () { openLightbox(foto, caps, pi); });
+          grid.appendChild(b);
+        });
+        psec.appendChild(ptitle); psec.appendChild(grid); body.appendChild(psec);
+      }
     }
 
     function goBack() {
@@ -591,6 +610,30 @@
   }
 
   /* ---------- Scroll velocity: due file di foto reattive allo scroll ---------- */
+  // Foto "estetiche" della striscia scorrevole: gestite dal CMS (content/estetiche.json).
+  // Se il file c'è, riempie le due strisce; altrimenti restano le immagini di default nell'HTML.
+  function initAesthetic() {
+    var tracks = $$(".velocity__track");
+    if (!tracks.length) return;
+    fetch("content/estetiche.json", { cache: "no-cache" })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) {
+        var foto = (j && j.foto ? j.foto : []).filter(Boolean);
+        if (!foto.length) return; // nessun dato: si tengono le immagini di default
+        var rows = [foto, foto.slice().reverse()]; // riga 2 in ordine inverso, per variare
+        tracks.forEach(function (track, i) {
+          var list = rows[i % rows.length], html = "";
+          for (var d = 0; d < 2; d++) { // set duplicato = scorrimento continuo senza salti
+            for (var k = 0; k < list.length; k++) {
+              html += '<img src="' + String(list[k]).replace(/"/g, "&quot;") + '" alt="" loading="lazy" />';
+            }
+          }
+          track.innerHTML = html;
+        });
+      })
+      .catch(function () {});
+  }
+
   function initVelocity() {
     var rows = $$(".velocity__row");
     if (!rows.length || !HAS_GSAP || REDUCED) return;

@@ -354,12 +354,13 @@ html.gsap-ready .gcat__media img { animation: kenburns 20s ease-in-out infinite 
 .gcat:hover .gcat__go { opacity: 1; transform: translateY(0); }
 
 @media (max-width: 900px) {
+  /* Da mobile/tablet TUTTE le card uguali: Matrimoni non è più il tile grande */
   .gallery__cats { grid-template-columns: repeat(2, 1fr); grid-auto-rows: clamp(150px, 32vw, 220px); }
-  .gcat:first-child { grid-column: 1 / -1; grid-row: auto; }
+  .gcat:first-child { grid-column: auto; grid-row: auto; }
+  .gcat:first-child .gcat__name { font-size: clamp(1.25rem, 1.8vw, 1.7rem); }
 }
 @media (max-width: 460px) {
   .gallery__cats { grid-template-columns: 1fr; }
-  .gcat:first-child { grid-column: auto; }
 }
 
 /* ---------- Archivio (overlay: eventi + foto) ---------- */
@@ -395,20 +396,28 @@ html.gsap-ready .gcat__media img { animation: kenburns 20s ease-in-out infinite 
 .gevent__info { font-size: 0.85rem; color: var(--ink-soft); }
 .gevent__count { font-size: 0.66rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-top: 0.2rem; }
 
-/* video dell'evento (in cima, a tutta larghezza) */
-.gvideos { column-span: all; display: flex; flex-direction: column; gap: clamp(0.8rem, 2vw, 1.4rem); margin-bottom: clamp(1rem, 2.5vw, 1.8rem); }
+/* dettaglio evento: intestazione + sezioni (Video / Foto) ben distinte */
+.archive__body--event { display: block; }
+.gevent-head { margin-bottom: clamp(1.6rem, 4vw, 2.6rem); }
+.gevent-head__meta { margin: 0; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
+.gsec { margin-bottom: clamp(2rem, 5vw, 3.4rem); }
+.gsec:last-child { margin-bottom: 0; }
+.gsec__title { margin: 0 0 clamp(0.9rem, 2.2vw, 1.3rem); padding-bottom: 0.65rem; border-bottom: 1px solid var(--line-soft); font-size: 0.7rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ink-soft); }
+
+/* video dell'evento */
+.gvideos { display: flex; flex-direction: column; gap: clamp(0.8rem, 2vw, 1.4rem); }
 .gvideo { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 2px; overflow: hidden; background: #000; }
 .gvideo iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
 .gvideo--link { aspect-ratio: auto; width: auto; align-self: flex-start; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.9rem 1.4rem; color: var(--gold); border: 1px solid var(--gold); background: transparent; text-decoration: none; letter-spacing: 0.04em; font-size: 0.95rem; transition: background 0.3s var(--ease), color 0.3s var(--ease); }
 .gvideo--link:hover { background: var(--gold); color: #120d0a; }
 
 /* griglia foto dell'evento (masonry) */
-.archive__body--photos { column-count: 3; column-gap: clamp(0.8rem, 2vw, 1.4rem); }
+.gphotos { column-count: 3; column-gap: clamp(0.8rem, 2vw, 1.4rem); }
 .gphoto { display: block; width: 100%; margin: 0 0 clamp(0.8rem, 2vw, 1.4rem); break-inside: avoid; cursor: pointer; padding: 0; overflow: hidden; border-radius: 2px; }
 .gphoto img { width: 100%; height: auto; display: block; transition: transform 1s var(--ease), filter .5s; filter: brightness(0.95); }
 .gphoto:hover img { transform: scale(1.04); filter: brightness(1.08); }
-@media (max-width: 780px) { .archive__body--photos { column-count: 2; } }
-@media (max-width: 460px) { .archive__body--photos { column-count: 1; } }
+@media (max-width: 780px) { .gphotos { column-count: 2; } }
+@media (max-width: 460px) { .gphotos { column-count: 1; } }
 
 /* ---------- Services ---------- */
 .services { padding: clamp(5rem, 12vh, 10rem) var(--pad); max-width: var(--maxw); margin: 0 auto; }
